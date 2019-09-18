@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to Generalised Linear Modelling using R</title>
+  <meta name="description" content="Introduction to Generalised Linear Modelling using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to Generalised Linear Modelling using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to Generalised Linear Modelling using R" />
+  
+  
+  
+
+<meta name="author" content="Deirdre Toher">
+
+
+<meta name="date" content="2018-01-01">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="the-exponential-family.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="the-exponential-family.html"><a href="the-exponential-family.html"><i class="fa fa-check"></i><b>2</b> The Exponential Family</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-exponential-family.html"><a href="the-exponential-family.html#the-natural-exponential-family"><i class="fa fa-check"></i><b>2.1</b> The Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.2" data-path="the-exponential-family.html"><a href="the-exponential-family.html#sec:ExpFamily"><i class="fa fa-check"></i><b>2.2</b> The Exponential Family (more general definition)</a></li>
+<li class="chapter" data-level="2.3" data-path="the-exponential-family.html"><a href="the-exponential-family.html#proof-that-the-beta-distribution-is-a-member-of-the-exponential-family"><i class="fa fa-check"></i><b>2.3</b> Proof that the Beta distribution is a member of the Exponential Family</a></li>
+<li class="chapter" data-level="2.4" data-path="the-exponential-family.html"><a href="the-exponential-family.html#example-normal-distribution-is-a-member-of-the-natural-exponential-family"><i class="fa fa-check"></i><b>2.4</b> Example: Normal distribution is a member of the Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.5" data-path="the-exponential-family.html"><a href="the-exponential-family.html#in-the-exponential-family"><i class="fa fa-check"></i><b>2.5</b> In the Exponential Family</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="not-exponential-family.html"><a href="not-exponential-family.html"><i class="fa fa-check"></i><b>3</b> Not Exponential Family</a></li>
+<li class="chapter" data-level="4" data-path="the-glm-model.html"><a href="the-glm-model.html"><i class="fa fa-check"></i><b>4</b> The GLM Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:Link"><i class="fa fa-check"></i><b>4.1</b> Link function</a></li>
+<li class="chapter" data-level="4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#poisson-errors-and-log-link"><i class="fa fa-check"></i><b>4.2</b> Poisson Errors and Log Link</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-poisson-distribution"><i class="fa fa-check"></i><b>4.2.1</b> The Poisson Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="the-glm-model.html"><a href="the-glm-model.html#binomial-errors-and-logit-link"><i class="fa fa-check"></i><b>4.3</b> Binomial Errors and Logit Link</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-binomial-distribution"><i class="fa fa-check"></i><b>4.3.1</b> The Binomial Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:CanonLink"><i class="fa fa-check"></i><b>4.4</b> Canonical Link functions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#example-gamma-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Example: Gamma distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#further-examples"><i class="fa fa-check"></i><b>4.4.2</b> Further Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="poisson-data.html"><a href="poisson-data.html"><i class="fa fa-check"></i><b>5</b> Poisson data</a><ul>
+<li class="chapter" data-level="5.1" data-path="poisson-data.html"><a href="poisson-data.html#poisson-examples"><i class="fa fa-check"></i><b>5.1</b> Poisson Examples</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="poisson-data.html"><a href="poisson-data.html#example-1-poisson-response-with-one-covariate"><i class="fa fa-check"></i><b>5.1.1</b> Example 1: Poisson response with one covariate</a></li>
+<li class="chapter" data-level="5.1.2" data-path="poisson-data.html"><a href="poisson-data.html#example-2-poisson-response-with-two-factors"><i class="fa fa-check"></i><b>5.1.2</b> Example 2: Poisson response with two factors</a></li>
+<li class="chapter" data-level="5.1.3" data-path="poisson-data.html"><a href="poisson-data.html#example-3-poisson-response-with-two-covariates"><i class="fa fa-check"></i><b>5.1.3</b> Example 3: Poisson response with two covariates</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="poisson-data.html"><a href="poisson-data.html#offsets"><i class="fa fa-check"></i><b>5.2</b> Offsets</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="poisson-data.html"><a href="poisson-data.html#example-4-insurance-data"><i class="fa fa-check"></i><b>5.2.1</b> Example 4: Insurance data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="poisson-data.html"><a href="poisson-data.html#practical-exercises"><i class="fa fa-check"></i><b>5.3</b> Practical exercises</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="poisson-data.html"><a href="poisson-data.html#exercise-1-missing-persons-data"><i class="fa fa-check"></i><b>5.3.1</b> Exercise 1: Missing persons data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="poisson-data.html"><a href="poisson-data.html#exercise-2-aids-data"><i class="fa fa-check"></i><b>5.3.2</b> Exercise 2: AIDS data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="poisson-data.html"><a href="poisson-data.html#exercise-3-composite-material-cracks-data"><i class="fa fa-check"></i><b>5.3.3</b> Exercise 3: Composite material cracks data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="poisson-data.html"><a href="poisson-data.html#over-dispersion"><i class="fa fa-check"></i><b>5.4</b> Over-dispersion</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="poisson-data.html"><a href="poisson-data.html#example-5-poisson-slugs"><i class="fa fa-check"></i><b>5.4.1</b> Example 5: Poisson (slugs)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Generalised Linear Modelling using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>Analysis of variance and covariance (ANOVA / ANCOVA) can be referred to as general linear modelling. The data comprise multiple measurements made on groups of subjects and are assumed to be observations from a normal distribution usually with constant variance. In addition, the mean of the distribution is assumed to be a linear function of unknown parameters with known coefficients.</p>
+<p>Generalised linear modelling (GLM) relaxes these assumptions:</p>
+<ul>
+<li>observations may come from a very general class of distributions;<br />
+</li>
+<li>any twice differentiable one-to-one function of the mean is represented via a linear function of unknown parameters.</li>
+</ul>
+<p>Since the normal distribution belongs to the permitted class of distributions then using this and the identity function means that general linear modelling is a special case of GLM. Dealing with data from normal distributions has the consequence that decision making processes are available that use <span class="math inline">\(\chi^2\)</span>, t and F distributions. However, for non-normal GLM we do not have this luxury and instead have to rely on a number of asymptotic results the properties of which are currently only partly understood. Thus we can see that GLM provides a broader choice of modelling opportunities than general linear modelling, however the latter does have the luxury of greater precision in decision making.</p>
+<p>Prior to the advent of GLM, data from non-normal distributions was transformed to normality; for instance, taking the square root of Poisson data. Consequently the power of the normal distribution theory could be utilised. However, these transformations are themselves only asymptotic and the resulting model can appear very strange and artificial.</p>
+<p>Nelder and Wedderburn (1972) initially proposed the GLM methodology. Two good references for GLM are:</p>
+<ul>
+<li>Dobson - An introduction to generalised linear models;</li>
+<li>McCullagh and Nelder - Generalised linear models.</li>
+</ul>
+<p>The following books cover the application of GLM (and many other statistical areas) from the R perspective which is very similar to how one would do things in R:</p>
+<ul>
+<li>Crawley - Statistical Computing : An Introduction to Data Analysis using R;</li>
+<li>Venebles and Ripley - Modern Applied Statistics with R (S).</li>
+</ul>
+<p>The examples of model building and evaluation in R are given by code in GLMpart1.R and the associated output is in the final section of this document for reference purposes. You are advised to download the R file from blackboard and run it in your own time. This version of the notes are written in Rmarkdown, which can be used for reproducible research; the code is embedded within the text of the document.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-exponential-family.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

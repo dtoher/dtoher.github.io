@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to Generalised Linear Modelling using R</title>
+  <meta name="description" content="Introduction to Generalised Linear Modelling using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to Generalised Linear Modelling using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to Generalised Linear Modelling using R" />
+  
+  
+  
+
+<meta name="author" content="Deirdre Toher">
+
+
+<meta name="date" content="2018-01-01">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduction.html">
+<link rel="next" href="not-exponential-family.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="the-exponential-family.html"><a href="the-exponential-family.html"><i class="fa fa-check"></i><b>2</b> The Exponential Family</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-exponential-family.html"><a href="the-exponential-family.html#the-natural-exponential-family"><i class="fa fa-check"></i><b>2.1</b> The Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.2" data-path="the-exponential-family.html"><a href="the-exponential-family.html#sec:ExpFamily"><i class="fa fa-check"></i><b>2.2</b> The Exponential Family (more general definition)</a></li>
+<li class="chapter" data-level="2.3" data-path="the-exponential-family.html"><a href="the-exponential-family.html#proof-that-the-beta-distribution-is-a-member-of-the-exponential-family"><i class="fa fa-check"></i><b>2.3</b> Proof that the Beta distribution is a member of the Exponential Family</a></li>
+<li class="chapter" data-level="2.4" data-path="the-exponential-family.html"><a href="the-exponential-family.html#example-normal-distribution-is-a-member-of-the-natural-exponential-family"><i class="fa fa-check"></i><b>2.4</b> Example: Normal distribution is a member of the Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.5" data-path="the-exponential-family.html"><a href="the-exponential-family.html#in-the-exponential-family"><i class="fa fa-check"></i><b>2.5</b> In the Exponential Family</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="not-exponential-family.html"><a href="not-exponential-family.html"><i class="fa fa-check"></i><b>3</b> Not Exponential Family</a></li>
+<li class="chapter" data-level="4" data-path="the-glm-model.html"><a href="the-glm-model.html"><i class="fa fa-check"></i><b>4</b> The GLM Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:Link"><i class="fa fa-check"></i><b>4.1</b> Link function</a></li>
+<li class="chapter" data-level="4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#poisson-errors-and-log-link"><i class="fa fa-check"></i><b>4.2</b> Poisson Errors and Log Link</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-poisson-distribution"><i class="fa fa-check"></i><b>4.2.1</b> The Poisson Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="the-glm-model.html"><a href="the-glm-model.html#binomial-errors-and-logit-link"><i class="fa fa-check"></i><b>4.3</b> Binomial Errors and Logit Link</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-binomial-distribution"><i class="fa fa-check"></i><b>4.3.1</b> The Binomial Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:CanonLink"><i class="fa fa-check"></i><b>4.4</b> Canonical Link functions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#example-gamma-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Example: Gamma distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#further-examples"><i class="fa fa-check"></i><b>4.4.2</b> Further Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="poisson-data.html"><a href="poisson-data.html"><i class="fa fa-check"></i><b>5</b> Poisson data</a><ul>
+<li class="chapter" data-level="5.1" data-path="poisson-data.html"><a href="poisson-data.html#poisson-examples"><i class="fa fa-check"></i><b>5.1</b> Poisson Examples</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="poisson-data.html"><a href="poisson-data.html#example-1-poisson-response-with-one-covariate"><i class="fa fa-check"></i><b>5.1.1</b> Example 1: Poisson response with one covariate</a></li>
+<li class="chapter" data-level="5.1.2" data-path="poisson-data.html"><a href="poisson-data.html#example-2-poisson-response-with-two-factors"><i class="fa fa-check"></i><b>5.1.2</b> Example 2: Poisson response with two factors</a></li>
+<li class="chapter" data-level="5.1.3" data-path="poisson-data.html"><a href="poisson-data.html#example-3-poisson-response-with-two-covariates"><i class="fa fa-check"></i><b>5.1.3</b> Example 3: Poisson response with two covariates</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="poisson-data.html"><a href="poisson-data.html#offsets"><i class="fa fa-check"></i><b>5.2</b> Offsets</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="poisson-data.html"><a href="poisson-data.html#example-4-insurance-data"><i class="fa fa-check"></i><b>5.2.1</b> Example 4: Insurance data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="poisson-data.html"><a href="poisson-data.html#practical-exercises"><i class="fa fa-check"></i><b>5.3</b> Practical exercises</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="poisson-data.html"><a href="poisson-data.html#exercise-1-missing-persons-data"><i class="fa fa-check"></i><b>5.3.1</b> Exercise 1: Missing persons data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="poisson-data.html"><a href="poisson-data.html#exercise-2-aids-data"><i class="fa fa-check"></i><b>5.3.2</b> Exercise 2: AIDS data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="poisson-data.html"><a href="poisson-data.html#exercise-3-composite-material-cracks-data"><i class="fa fa-check"></i><b>5.3.3</b> Exercise 3: Composite material cracks data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="poisson-data.html"><a href="poisson-data.html#over-dispersion"><i class="fa fa-check"></i><b>5.4</b> Over-dispersion</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="poisson-data.html"><a href="poisson-data.html#example-5-poisson-slugs"><i class="fa fa-check"></i><b>5.4.1</b> Example 5: Poisson (slugs)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Generalised Linear Modelling using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-exponential-family" class="section level1">
+<h1><span class="header-section-number">2</span> The Exponential Family</h1>
+<div id="the-natural-exponential-family" class="section level2">
+<h2><span class="header-section-number">2.1</span> The Natural Exponential Family</h2>
+<p>We will assume that the observations come from a distribution in the natural exponential family of distributions. This means that the probability density function (pdf) can be written in the form:</p>
+<span class="math display" id="eq:b1">\[\begin{equation}
+f(y_{i})=\exp\left\{\frac{y_{i}\theta_{i}-b(\theta_{i})}{a_{i}(\phi)}+c(y_{i},\phi)\right\} \tag{2.1}
+\end{equation}\]</span>
+<p>Here <span class="math inline">\(\theta_{i}\)</span> and <span class="math inline">\(\phi\)</span> are parameters and <span class="math inline">\(a_{i}(\phi)\)</span>, <span class="math inline">\(b(\theta_{i})\)</span> and <span class="math inline">\(c(y_{i},\phi)\)</span> are known functions. In all models considered here the function <span class="math inline">\(a_{i}(\phi)\)</span> has the form <span class="math display">\[a_{i}(\phi)=\frac{\phi}{p_{i}},\]</span> where <span class="math inline">\(p_{i}\)</span> is a known prior weight, often <span class="math inline">\(1\)</span>.</p>
+<p>The parameters <span class="math inline">\(\theta_{i}\)</span> and <span class="math inline">\(\phi\)</span> are essentially location and scale parameters. It can be shown that if <span class="math inline">\(Y_{i}\)</span> has a distribution in the exponential family then it has mean and variance:</p>
+<span class="math display">\[\begin{eqnarray}
+\mathbf{E}(Y_{i})&amp;=&amp;\mu_{i}=b&#39;(\theta_{i})\\
+var(Y_{i})&amp;=&amp;\sigma_{i}^{2}=b&#39;&#39;(\theta_{i})a_{i}(\phi)
+\end{eqnarray}\]</span>
+<p>where <span class="math inline">\(b&#39;(\theta_{i})\)</span> and <span class="math inline">\(b&#39;&#39;(\theta_{i})\)</span> are the first and second derivatives of <span class="math inline">\(b(\theta_{i})\)</span>.</p>
+<p>The exponential family just defined includes lots of very useful special cases, including the Normal, Binomial, Poisson, Exponential, Gamma and Inverse Gaussian distributions.</p>
+</div>
+<div id="sec:ExpFamily" class="section level2">
+<h2><span class="header-section-number">2.2</span> The Exponential Family (more general definition)</h2>
+<p>Previously, we have considered the definition of a member of the natural exponential family of distributions, which means that they can be expressed in the form:</p>
+<p><span class="math display">\[f(x)=\exp\left(\frac{\theta x-b(\theta)}{a(\psi)}+c(x,\psi)\right)\]</span> Distributions of this form have canonical link functions (will be introduced in Sections <a href="the-glm-model.html#sec:Link">4.1</a> and <a href="the-glm-model.html#sec:CanonLink">4.4</a>). However, more formally, a member of the exponential family of distributions can be written as: <span class="math display">\[f(x)=\exp\left(\psi^{t}T(x)-A(\psi)+q(x)\right)\]</span> where <span class="math inline">\(T(x)\)</span> is a sufficient statistic for the distribution. The easiest way to calculate the sufficient statistic is actually to calculate the minimal sufficient statistic: <span class="math inline">\(T(x)\)</span> is a minimal sufficient statistic if: <span class="math display">\[\frac{L(\mathbf{x}_{n}|\theta)}{L(\mathbf{y}_{n}|\theta)} \textrm{is not a function of }\theta \Leftrightarrow T(\mathbf{x}_{n})=T(\mathbf{y}_{n})\]</span></p>
+The likelihood function <span class="math inline">\(L(\mathbf{x}_{n}|\theta)=L(x_{1},x_{2},\ldots,x_{n}|\theta)\)</span> of an iid sample from any distribution <span class="math inline">\(f(x|\theta)\)</span> is: <span class="math display">\[L(\mathbf{x}_{n}|\theta)=L(x_{1},\ldots,x_{n}|\theta)=\prod_{i=1}^{n}f(x_{i}|\theta).\]</span> So, for the Normal distribution: <span class="math display">\[L(x|\mu,\sigma^{2})=\frac{1}{\sqrt{2\pi \sigma^{2}}}\exp\left(-\frac{(x-\mu)^{2}}{2\sigma^{2}}\right)\]</span> For <span class="math inline">\(\mathbf{x}_{n}=(x_{1},x_{2},\ldots,x_{n})\)</span> iid random samples from the same Normal distribution: <span class="math display">\[L(\mathbf{x}_{n}|\mu,\sigma^{2}) = \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi \sigma^{2}}}\exp\left(-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}\right)=
+\left(\frac{1}{\sqrt{2\pi \sigma^{2}}}\right)^{n}\prod_{i=1}^{n}\exp\left(-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}\right)\]</span> and <span class="math display">\[L(\mathbf{y}_{n}|\mu,\sigma^{2}) = \left(\frac{1}{\sqrt{2\pi \sigma^{2}}}\right)^{n}\prod_{i=1}^{n}\exp\left(-\frac{(y_{i}-\mu)^{2}}{2\sigma^{2}}\right)\]</span> Hence:
+<span class="math display">\[\begin{eqnarray}
+\frac{L(\mathbf{x}_{n}|\theta)}{L(\mathbf{y}_{n}|\theta)} &amp;=&amp; \frac{\prod_{i=1}^{n}\exp\left(-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}\right)}{\prod_{i=1}^{n}\exp\left(-\frac{(y_{i}-\mu)^{2}}{2\sigma^{2}}\right)}\nonumber\\
+&amp;=&amp; \prod_{i=1}^{n} \exp\left(-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}+\frac{(y_{i}-\mu)^{2}}{2\sigma^{2}}\right)\nonumber\\
+&amp;=&amp; \exp\left(\sum_{i=1}^{n}-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}+\frac{(y_{i}-\mu)^{2}}{2\sigma^{2}}\right)\nonumber\\
+&amp;=&amp; \exp\left(\sum_{i=1}^{n}-\frac{x_{i}^{2}}{2\sigma^{2}}+\frac{2\mu x_{i}}{2\sigma^{2}}-\frac{\mu^{2}}{2\sigma^{2}}+\frac{y_{i}^{2}}{2\sigma^{2}}-\frac{2\mu y_{i}}{2\sigma^{2}}+\frac{\mu^{2}}{2\sigma^{2}}\right)\nonumber\\
+&amp;=&amp;\exp\left(\sum_{i=1}^{n}\frac{y_{i}^{2}-x_{i}^{2}}{2\sigma^{2}}+\frac{\mu(x_{i}-y_{i})}{\sigma^{2}}\right)\nonumber
+\end{eqnarray}\]</span>
+<p>So <span class="math display">\[\frac{L(\mathbf{x}_{n}|\theta)}{L(\mathbf{y}_{n}|\theta)}\]</span> is constant with respect to <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> if and only if <span class="math inline">\(\sum_{i}x_{i}=\sum_{i}y_{i}\)</span> and <span class="math inline">\(\sum_{i}x_{i}^{2}=\sum_{i}y_{i}^{2}\)</span>. Therefore the minimal sufficient statistic for a <span class="math inline">\(N(\mu; \sigma^{2})\)</span>, where both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> are unknown is <span class="math inline">\(T(\mathbf{x}_{n}) = (\sum_{i}x_{i},\sum_{i}x_{i}^{2})\)</span>.</p>
+<p>If <span class="math inline">\(\sigma^2\)</span> was known, then only <span class="math inline">\(\sum_{i}\mu(x_{i}-y_{i})\)</span> needs to be made constant with respect to <span class="math inline">\(\mu\)</span> – so the minimal sufficient statistic for <span class="math inline">\(\mu\)</span> if <span class="math inline">\(\sigma^2\)</span> is known is <span class="math inline">\(\sum_{i}x_{i}\)</span>.</p>
+</div>
+<div id="proof-that-the-beta-distribution-is-a-member-of-the-exponential-family" class="section level2">
+<h2><span class="header-section-number">2.3</span> Proof that the Beta distribution is a member of the Exponential Family</h2>
+Consider the <span class="math inline">\(beta(a,b)\)</span> distribution: <span class="math display">\[L(\mathbf{x}_{n}|a,b)=\prod_{i=1}^{n}\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x_{i}^{a-1}(1-x_{i})^{b-1}\]</span> The (minimal) sufficient statistic is:
+<span class="math display">\[\begin{eqnarray}
+\frac{L(\mathbf{x}_{n}|a, b)}{L(\mathbf{y}_{n}|a,b)} &amp;=&amp; \frac{\prod_{i=1}^{n}\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x_{i}^{a-1}(1-x_{i})^{b-1}}{\prod_{i=1}^{n}\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}y_{i}^{a-1}(1-y_{i})^{b-1}} \nonumber\\
+&amp;=&amp; \frac{\left(\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\right)^n}{\left(\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\right)^n}\frac{\prod_{i=1}^{n}x_{i}^{a-1}(1-x_{i})^{b-1}}{\prod_{i=1}^{n}y_{i}^{a-1}(1-y_{i})^{b-1}}\nonumber \\
+&amp; = &amp; \frac{\prod_{i=1}^{n}x_{i}^{a-1}(1-x_{i})^{b-1}}{\prod_{i=1}^{n}y_{i}^{a-1}(1-y_{i})^{b-1}}\nonumber \\
+\log\left(\frac{L(\mathbf{x}_{n}|a, b)}{L(\mathbf{y}_{n}|a,b)}\right) &amp;=&amp; \log\left(\frac{\prod_{i=1}^{n}x_{i}^{a-1}(1-x_{i})^{b-1}}{\prod_{i=1}^{n}y_{i}^{a-1}(1-y_{i})^{b-1}}\right)\nonumber\\
+&amp;=&amp; \sum_{i=1}^{n}\log(x_{i})^{a}+\sum_{i=1}^{n}\log(1-x_{i})^{b-1}-\sum_{i=1}^{n}\log(y_{i})^{a}-\sum_{i=1}^{n}\log(1-y_{i})^{b-1}\nonumber
+\end{eqnarray}\]</span>
+This is constant with respect to <span class="math inline">\(a\)</span> if and only if <span class="math inline">\(\sum_{i=1}^{n}\log(x_{i})=\sum_{i=1}^{n}\log(y_{i})\)</span> and constant with respect to <span class="math inline">\(b\)</span> if and only if <span class="math inline">\(\sum_{i=1}^{n}\log(1-x_{i})^{b-1}=\sum_{i=1}^{n}\log(1-y_{i})^{b-1}\)</span>. Thus <span class="math display">\[T(\mathbf{x}_{n})=\left(\sum_{i=1}^{n}\log(x_{i}),\sum_{i=1}^{n}\log(1-x_{i})\right)\]</span> If <span class="math inline">\(n=1\)</span> (a single observation): <span class="math display">\[T(x)=\left(\log(x),\log(1-x)\right)=\left(\begin{array}{c}\log(x)\\ \log(1-x) \end{array}\right)\]</span> so:
+<span class="math display">\[\begin{eqnarray}
+f(x|a,b) &amp;=&amp; \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x^{a-1}(1-x)^{b-1}\nonumber\\
+\log f(x|a,b)&amp;=&amp; \log \Gamma(a+b)- \log \Gamma(a) - \log \Gamma(b) +(a-1)\log x +(b-1)\log(1-x)\nonumber\\
+f(x|a,b) &amp;=&amp; \exp\left\{a\log x - \log x +b\log(1-x) -\log(1-x) \right. \nonumber\\
+ &amp; &amp;  \left.\log \Gamma(a+b)- \log \Gamma(a) - \log \Gamma(b)\right\}\nonumber\\
+ &amp;=&amp; \exp\left\{ (a\ b)\left(\begin{array}{c}\log x\\ \log(1-x)\end{array} \right)-\left(\begin{array}{c}\log x\\ \log(1-x)\end{array} \right)-A(a\ b)\right\}\nonumber
+\end{eqnarray}\]</span>
+<p>where <span class="math inline">\(\psi^{t}=(a\ b)\)</span> and <span class="math display">\[A(\psi)=A(a\ b) =\log \Gamma(a) + \log \Gamma(b) - \log \Gamma(a+b)\]</span> and: <span class="math display">\[q(x)=-\left(\begin{array}{c}\log x\\ \log(1-x)\end{array} \right)\]</span> so that <span class="math display">\[f(x|a,b) = \exp\left\{ \psi^{t}T(x)-A(\psi)+q(x)\right\}\textrm{ as required.}\]</span></p>
+</div>
+<div id="example-normal-distribution-is-a-member-of-the-natural-exponential-family" class="section level2">
+<h2><span class="header-section-number">2.4</span> Example: Normal distribution is a member of the Natural Exponential Family</h2>
+<p>The Normal distribution has density: <span class="math display">\[f(y_{i})=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{\frac{-1}{2}\frac{(y_{i}-\mu_{i})^{2}}{\sigma^{2}}\right\}.\]</span> Recall that, to show that a distribution is a member of the natural exponential family, it must be possible to write it in the form: <span class="math display">\[f(y_{i})=\exp\left\{\frac{y_{i}\theta_{i}-b(\theta_{i})}{a_{i}(\phi)}+c(y_{i},\phi)\right\}\]</span> Now rewriting the density: <span class="math display">\[f(y_{i})=\exp\left\{\frac{-1}{2}\frac{(y_{i}-\mu_{i})^{2}}{\sigma^{2}}-\frac{1}{2}\log\left(2\pi\sigma^{2}\right) \right\}\]</span> Expanding the square in the exponent we get <span class="math display">\[(y_{i}-\mu_{i})^{2}=y_{i}^{2}+\mu_{i}^{2}-2y_{i}\mu_{i}.\]</span> The coefficient of <span class="math inline">\(y_{i}\)</span> is <span class="math inline">\(\frac{\mu_{i}}{\sigma^{2}}\)</span>. This result identifies <span class="math inline">\(\theta_{i}\)</span> as <span class="math inline">\(\mu_{i}\)</span> and <span class="math inline">\(\phi\)</span> as <span class="math inline">\(\sigma^{2}\)</span>, with <span class="math inline">\(a_{i}(\phi)=\phi\)</span>. <span class="math display">\[f(y_{i})=\exp\left\{\frac{y_{i}\mu_{i}-\frac{1}{2}\mu_{i}^{2}}{\sigma^{2}}-\frac{y_{i}^{2}}{2\sigma^{2}}-\frac{1}{2}\log\left(2\pi\sigma^{2}\right) \right\}.\]</span></p>
+<p><span class="math display">\[f(y_{i})=\exp\left\{\frac{y_{i}\theta_{i}-b(\theta_{i})}{a_{i}(\phi)}+c(y_{i},\phi)\right\}\]</span></p>
+Comparing these equations and noting that <span class="math inline">\(\mu_{i}=\theta_{i}\)</span>, then <span class="math display">\[b(\theta_{i})=\frac{1}{2}\theta_{i}^{2},\qquad b&#39;(\theta_{i})=\theta_{i}\qquad \textrm{and }b&#39;&#39;(\theta_{i})=1.\]</span><br />
+Thus the mean and the variance then are:
+<span class="math display">\[\begin{eqnarray}
+\mathbf{E}(Y_{i})&amp;=&amp;\mu_{i}=b&#39;(\theta_{i})=\mu_{i}\nonumber\\
+var(Y_{i})&amp;=&amp;\sigma_{i}^{2}=b&#39;&#39;(\theta_{i})a_{i}(\phi)=\sigma^{2}.\nonumber
+\end{eqnarray}\]</span>
+</div>
+<div id="in-the-exponential-family" class="section level2">
+<h2><span class="header-section-number">2.5</span> In the Exponential Family</h2>
+<p>Distributions that can be shown to be members of the Exponential Family of Distributions:</p>
+<ul>
+<li><p>Normal / Gaussian distribution</p>
+<p><span class="math display">\[f(x)=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left(\frac{-\left(x-\mu\right)^{2}}{2\sigma^{2}}\right)\]</span></p></li>
+<li><p>Exponential distribution</p>
+<p><span class="math display">\[f(x)=\left\{\begin{array}{cr}\lambda\exp(-\lambda x),&amp; x\geq0\\0,&amp; x&lt;0 \end{array}\right. \]</span></p></li>
+<li><p>Bernouilli distribution</p>
+<p><span class="math display">\[f(x)=p^{x}(1-p)^{1-x} \ x\in \left\{0,1\right\} \]</span></p></li>
+<li><p>Binomial distribution</p>
+<p><span class="math display">\[f(x)=\left(\begin{array}{c}n \\ x \end{array}\right)p^{x}(1-p)^{n-x},\ x=0,1,2,\ldots,n\]</span></p></li>
+<li><p>Poisson distribution</p></li>
+</ul>
+<p><span class="math display">\[f(x)=\left\{\begin{array}{cr}\frac{\lambda^{x} \exp(-\lambda)}{x!},&amp; \lambda&gt;0,\ x=0,1,2,\ldots\\ 0, &amp; \textrm{otherwise}\end{array}\right.\]</span></p>
+<ul>
+<li><p>Geometric distribution</p>
+<p><span class="math display">\[f(x)=(1-p)^{x-1}p\ \textrm{for} \ x=1,2,3,\ldots \]</span></p></li>
+<li><p>Gamma distribution</p></li>
+</ul>
+<p><span class="math display">\[f(x)=\frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}\exp(-\beta x)\ \textrm{for } x, \alpha, \beta &gt;0 \]</span></p>
+<ul>
+<li><span class="math inline">\(\chi^{2}\)</span> distribution</li>
+</ul>
+<p><span class="math display">\[f(x)=\left\{\begin{array}{cr}\frac{1}{2^{k/2}\Gamma\left(k/2\right)}x^{\frac{k}{2}-1}\exp(\frac{-x}{2}),&amp; x\geq 0\\ 0, &amp; x&lt;0\end{array}\right. \]</span></p>
+<ul>
+<li>Beta distribution</li>
+</ul>
+<p><span class="math display">\[f(x)=\frac{\Gamma\left(\alpha+\beta\right)}{\Gamma\left(\alpha\right)\Gamma\left(\beta\right)}x^{\alpha-1}(1-x)^{\beta-1}\]</span></p>
+<ul>
+<li>Weibull (with known shape parameter (<span class="math inline">\(k\)</span>)) distribution</li>
+</ul>
+<p><span class="math display">\[f(x)=\left\{\begin{array}{cr}\frac{k}{\lambda}\left(\frac{x}{\lambda}\right)^{k-1}\exp\left(-\left(\frac{x}{\lambda} \right)^{k}\right),&amp; x\geq 0\\ 0, &amp; x&lt;0  \end{array}\right.\]</span></p>
+<ul>
+<li>Inverse Gaussian distribution</li>
+</ul>
+<p><span class="math display">\[f(x)=\left[\frac{\lambda}{2\pi x^{3}}\right]^{\frac{1}{2}}\exp\left(\frac{-\lambda\left(x-\mu\right)^{2}}{2\mu^{2}x}\right)\ x&gt;0,\ \mu&gt;0\ \textrm{(mean)}, \lambda&gt;0\ \textrm{(shape)}\]</span></p>
+<ul>
+<li>Negative binomial distribution (known <span class="math inline">\(r\)</span>)</li>
+</ul>
+<p><span class="math display">\[f(x)=\left(\begin{array}{c}x+r-1\\x\end{array}\right)p^{r}(1-p)^{x}\ \ \textrm{for}\ x=0,1,2,\ldots \]</span></p>
+<ul>
+<li>Multinomial distribution</li>
+</ul>
+<p><span class="math display">\[f(x_{1},\ldots,x_{k})=\left\{\begin{array}{cr}\frac{n!}{x_{1}!\cdots x_{k}!}p_{1}^{x_{1}}\cdots p_{k}^{x_{k}},&amp; \textrm{when} \sum_{i=1}^{k}x_{i}=n\\ 0, &amp; \textrm{otherwise}  \end{array}\right. \]</span></p>
+<ul>
+<li>Dirichlet distribution (complicated distribution used as a conjugate prior for the multinomial distribution in Bayesian statistics)</li>
+</ul>
+<p>Which of these can be shown to be in the Natural Exponential Family of distributions?</p>
+<p>A youtube playlist can be found <a href="https://www.youtube.com/playlist?list=PLvCaViUWnpSn1YmTT6_3P_At1UapqaLGy">here</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="not-exponential-family.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

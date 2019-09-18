@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to Generalised Linear Modelling using R</title>
+  <meta name="description" content="Introduction to Generalised Linear Modelling using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to Generalised Linear Modelling using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to Generalised Linear Modelling using R" />
+  
+  
+  
+
+<meta name="author" content="Deirdre Toher">
+
+
+<meta name="date" content="2018-01-01">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="not-exponential-family.html">
+<link rel="next" href="poisson-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="the-exponential-family.html"><a href="the-exponential-family.html"><i class="fa fa-check"></i><b>2</b> The Exponential Family</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-exponential-family.html"><a href="the-exponential-family.html#the-natural-exponential-family"><i class="fa fa-check"></i><b>2.1</b> The Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.2" data-path="the-exponential-family.html"><a href="the-exponential-family.html#sec:ExpFamily"><i class="fa fa-check"></i><b>2.2</b> The Exponential Family (more general definition)</a></li>
+<li class="chapter" data-level="2.3" data-path="the-exponential-family.html"><a href="the-exponential-family.html#proof-that-the-beta-distribution-is-a-member-of-the-exponential-family"><i class="fa fa-check"></i><b>2.3</b> Proof that the Beta distribution is a member of the Exponential Family</a></li>
+<li class="chapter" data-level="2.4" data-path="the-exponential-family.html"><a href="the-exponential-family.html#example-normal-distribution-is-a-member-of-the-natural-exponential-family"><i class="fa fa-check"></i><b>2.4</b> Example: Normal distribution is a member of the Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.5" data-path="the-exponential-family.html"><a href="the-exponential-family.html#in-the-exponential-family"><i class="fa fa-check"></i><b>2.5</b> In the Exponential Family</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="not-exponential-family.html"><a href="not-exponential-family.html"><i class="fa fa-check"></i><b>3</b> Not Exponential Family</a></li>
+<li class="chapter" data-level="4" data-path="the-glm-model.html"><a href="the-glm-model.html"><i class="fa fa-check"></i><b>4</b> The GLM Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:Link"><i class="fa fa-check"></i><b>4.1</b> Link function</a></li>
+<li class="chapter" data-level="4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#poisson-errors-and-log-link"><i class="fa fa-check"></i><b>4.2</b> Poisson Errors and Log Link</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-poisson-distribution"><i class="fa fa-check"></i><b>4.2.1</b> The Poisson Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="the-glm-model.html"><a href="the-glm-model.html#binomial-errors-and-logit-link"><i class="fa fa-check"></i><b>4.3</b> Binomial Errors and Logit Link</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-binomial-distribution"><i class="fa fa-check"></i><b>4.3.1</b> The Binomial Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:CanonLink"><i class="fa fa-check"></i><b>4.4</b> Canonical Link functions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#example-gamma-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Example: Gamma distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#further-examples"><i class="fa fa-check"></i><b>4.4.2</b> Further Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="poisson-data.html"><a href="poisson-data.html"><i class="fa fa-check"></i><b>5</b> Poisson data</a><ul>
+<li class="chapter" data-level="5.1" data-path="poisson-data.html"><a href="poisson-data.html#poisson-examples"><i class="fa fa-check"></i><b>5.1</b> Poisson Examples</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="poisson-data.html"><a href="poisson-data.html#example-1-poisson-response-with-one-covariate"><i class="fa fa-check"></i><b>5.1.1</b> Example 1: Poisson response with one covariate</a></li>
+<li class="chapter" data-level="5.1.2" data-path="poisson-data.html"><a href="poisson-data.html#example-2-poisson-response-with-two-factors"><i class="fa fa-check"></i><b>5.1.2</b> Example 2: Poisson response with two factors</a></li>
+<li class="chapter" data-level="5.1.3" data-path="poisson-data.html"><a href="poisson-data.html#example-3-poisson-response-with-two-covariates"><i class="fa fa-check"></i><b>5.1.3</b> Example 3: Poisson response with two covariates</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="poisson-data.html"><a href="poisson-data.html#offsets"><i class="fa fa-check"></i><b>5.2</b> Offsets</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="poisson-data.html"><a href="poisson-data.html#example-4-insurance-data"><i class="fa fa-check"></i><b>5.2.1</b> Example 4: Insurance data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="poisson-data.html"><a href="poisson-data.html#practical-exercises"><i class="fa fa-check"></i><b>5.3</b> Practical exercises</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="poisson-data.html"><a href="poisson-data.html#exercise-1-missing-persons-data"><i class="fa fa-check"></i><b>5.3.1</b> Exercise 1: Missing persons data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="poisson-data.html"><a href="poisson-data.html#exercise-2-aids-data"><i class="fa fa-check"></i><b>5.3.2</b> Exercise 2: AIDS data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="poisson-data.html"><a href="poisson-data.html#exercise-3-composite-material-cracks-data"><i class="fa fa-check"></i><b>5.3.3</b> Exercise 3: Composite material cracks data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="poisson-data.html"><a href="poisson-data.html#over-dispersion"><i class="fa fa-check"></i><b>5.4</b> Over-dispersion</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="poisson-data.html"><a href="poisson-data.html#example-5-poisson-slugs"><i class="fa fa-check"></i><b>5.4.1</b> Example 5: Poisson (slugs)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Generalised Linear Modelling using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-glm-model" class="section level1">
+<h1><span class="header-section-number">4</span> The GLM Model</h1>
+<p>Let <span class="math inline">\(y_{1},\ldots,y_{n}\)</span> denote <span class="math inline">\(n\)</span> independent observations on a response. We treat <span class="math inline">\(y_{i}\)</span> as a realisation of a random variable <span class="math inline">\(Y_{i}\)</span>. In the general linear model we assume that <span class="math inline">\(Y_{i}\)</span> has a normal distribution with mean <span class="math inline">\(\mu_{i}\)</span> and variance <span class="math inline">\(\sigma^{2}\)</span> <span class="math display">\[Y_{i}\sim N(\mu_{i},\sigma^{2}),\]</span> and we further assume that the expected value <span class="math inline">\(\mu_{i}\)</span> is a linear function of <span class="math inline">\(p\)</span> predictors that take values <span class="math inline">\(\mathbf{x}&#39;_{i}=(x_{i1},\ldots,x_{ip})\)</span> for the <span class="math inline">\(i^{th}\)</span> case, so that <span class="math display">\[\mu_{i}=\mathbf{x}_{i}\mathbf{\beta}\]</span> where <span class="math inline">\(\mathbf{\beta}\)</span> is a vector of unknown parameters. We will generalise this in two steps, dealing with the stochastic and systematic components of the model.</p>
+<div id="sec:Link" class="section level2">
+<h2><span class="header-section-number">4.1</span> Link function</h2>
+<p>The second element of the generalisation is that instead of modelling the mean, as before, we will introduce a one-to-one continuously differentiable transformation <span class="math inline">\(g(\mu_{i})\)</span> and focus on: <span class="math display">\[\nu_{i}=g(\mu_{i}).\]</span> The function <span class="math inline">\(g(\mu_{i})\)</span> is known as the <strong>link function</strong>. Examples of commonly used link functions include the identity, log, reciprocal, logit and probit functions. We further assume that the transformed mean follows a linear model, so that <span class="math display">\[\nu_{i}=\mathbf{x}_{i}&#39;\mathbf{\beta}.\]</span></p>
+<p>The quantity <span class="math inline">\(\nu_{i}\)</span> is the <strong>linear predictor</strong>. Since the link (by construction) is one-to-one it is invertible, so we can then obtain: <span class="math display">\[\mu_{i}=g^{-1}(\mathbf{x}_{i}&#39;\mathbf{\beta}).\]</span></p>
+<p>An important thing to note is that we are not transforming the response <span class="math inline">\(y_{i}\)</span> but rather the <strong>expected value of the response</strong> <span class="math inline">\(\mu_{i}\)</span>. So, a model where <span class="math inline">\(\log(y_{i})\)</span> is linearly dependent on <span class="math inline">\(x_{i}\)</span> is not the same as a generalised linear model where <span class="math inline">\(\log(\mu_{i})\)</span> is linear on <span class="math inline">\(x_{i}\)</span>.</p>
+<p>When the link function makes the linear predictor <span class="math inline">\(\nu_{i}\)</span> the same as the canonical parameter <span class="math inline">\(\theta_{i}\)</span> we have what is known as a <strong>canonical link</strong>. The <strong>identity function</strong> is the canonical link for the Normal distribution. We will see that the logit is the canonical link for the binomial distribution and the log is the canonical link for the Poisson distribution. Therefore the canonical link leads to some natural pairings of types of data with link functions. These do not preclude the use of other link functions, but have the advantage that a minimal sufficient statistic for <span class="math inline">\(\beta\)</span> exists so that all the information about <span class="math inline">\(\beta\)</span> is contained in a function of the data of the same dimensionality as <span class="math inline">\(\beta\)</span>.</p>
+</div>
+<div id="poisson-errors-and-log-link" class="section level2">
+<h2><span class="header-section-number">4.2</span> Poisson Errors and Log Link</h2>
+<p>Application of general theory to the Poisson case.</p>
+<div id="the-poisson-distribution" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> The Poisson Distribution</h3>
+<p>A Poisson random variable has the probability distribution <span class="math display">\[f_{i}(y_{i})=\frac{\exp(-\mu_{i})\mu_{i}^{y_{i}}}{y_{i}!}\]</span> for <span class="math inline">\(y_{i}=0,1,2,\ldots\)</span>. The mean and the variance of <span class="math inline">\(Y_{i}\)</span> both equal <span class="math inline">\(\mu_{i}\)</span>. <span class="math display">\[\log f_{i}(y_{i})=y_{i}\log(\mu_{i})-\mu_{i}-\log(y_{i}!)\]</span> It is immediately apparent that <span class="math inline">\(\theta_{i}=\log(\mu_{i})\)</span>, this being the canonical parameter, indicating that the canonical link is the natural log. Solving for <span class="math inline">\(\mu_{i}\)</span> we see that the inverse link is <span class="math inline">\(\mu_{i}=\exp(\theta_{i})\)</span>. Therefore, <span class="math inline">\(\mu_{i}=b(\theta_{i})=\exp(\theta_{i})\)</span>. The last term is a function of the data <span class="math inline">\(y_{i}\)</span>, but not the parameter, therefore <span class="math inline">\(c(y_{i},\phi)=-\log(y_{i}!)\)</span>. Left to note is that <span class="math inline">\(a_{i}(\phi)=\phi\)</span> where <span class="math inline">\(\phi=1\)</span>.</p>
+<p>To confirm the mean and the variance are as expected: <span class="math display">\[\mu_{i}=b&#39;(\theta_{i})=\exp(\theta_{i})=\mu_{i}\]</span> and <span class="math display">\[v_{i}=a_{i}(\phi)b&#39;&#39;(\theta_{i})=\exp(\theta_{i})=\mu_{i}\]</span></p>
+</div>
+</div>
+<div id="binomial-errors-and-logit-link" class="section level2">
+<h2><span class="header-section-number">4.3</span> Binomial Errors and Logit Link</h2>
+<p>Application of the theory of generalised linear models to the case of binary data, in particular to logistic regression models.</p>
+<div id="the-binomial-distribution" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> The Binomial Distribution</h3>
+<p>Recall that the probability distribution function (pdf) of a Binomial distribution is: <span class="math display">\[f_{i}(y_{i})=\left(\begin{array}{c}   n_{i}\\y_{i}\end{array} \right)\tau_{i}^{y_{i}}(1-\tau_{i})^{n_{i}-y_{i}}.\]</span> Taking logs we see that <span class="math display">\[\log f_{i}(y_{i})=y_{i}\log \tau_{i} + (n_{i}-y_{i})\log (1-\tau_{i})+\log\left(\begin{array}{c}  n_{i}\\y_{i}\end{array} \right).\]</span> Collect the <span class="math inline">\(y_{i}\)</span> terms we see that: <span class="math display">\[\log f_{i}(y_{i})=y_{i}\log \left(\frac{\tau_{i}}{1-\tau_{i}}\right) + (n_{i})\log (1-\tau_{i})+\log\left(\begin{array}{c}    n_{i}\\y_{i}\end{array} \right).\]</span> Comparing to Equation (<a href="the-exponential-family.html#eq:b1">(2.1)</a>) <span class="math display">\[f(y_{i})=\exp\left\{\frac{y_{i}\theta_{i}-b(\theta_{i})}{a_{i}(\phi)}+c(y_{i},\phi)\right\}\]</span> we can see that <span class="math inline">\(a_{i}(\phi)=1\)</span>, <span class="math inline">\(\theta_{i}=\log \left(\frac{\tau_{i}}{1-\tau_{i}}\right)\)</span>.</p>
+Solving for <span class="math inline">\(\tau_{i}\)</span>:
+<span class="math display">\[\begin{eqnarray}\theta_{i}&amp;=&amp;\log \left(\frac{\tau_{i}}{1-\tau_{i}}\right)\nonumber\\
+\exp(\theta_{i})&amp;=&amp;\left(\frac{\tau_{i}}{1-\tau_{i}}\right)\nonumber\\
+(1-\tau_{i})\exp(\theta_{i})&amp;=&amp;\tau_{i}\nonumber\\
+\exp(\theta_{i})&amp;=&amp;\tau_{i}(1+\exp(\theta_{i}))\nonumber\\
+\frac{\exp(\theta_{i})}{1+\exp(\theta_{i})}&amp;=&amp;\tau_{i}\nonumber
+\end{eqnarray}\]</span>
+<p>so <span class="math display">\[1-\tau_{i}=\frac{1+\exp(\theta_{i})}{1+\exp(\theta_{i})}-\frac{\exp(\theta_{i})}{1+\exp(\theta_{i})}=\frac{1}{1+\exp(\theta_{i})}\]</span> Therefore: <span class="math display">\[\log(1-\tau_{i})=-\log(1+\exp(\theta_{i}))\]</span> and then <span class="math display">\[b(\theta_{i})=n_{i}\log(1+\exp(\theta_{i})).\]</span></p>
+<p>The remaining term in the pdf is not a function of <span class="math inline">\(\tau_{i}\)</span> but is a function of <span class="math inline">\(y_{i}\)</span>; so <span class="math display">\[c(y_{i},\phi)=\log\left(\begin{array}{c}n_{i}\\y_{i} \end{array}\right).\]</span> Previously we noted that <span class="math inline">\(a_{i}(\phi)=1\)</span>, however this is actually because <span class="math inline">\(\phi=1\)</span> and we would claim that <span class="math inline">\(a_{i}(\phi)=\phi\)</span>.</p>
+<p>Now verifying the mean and the variance. Differentiate <span class="math inline">\(b(\theta_{i})\)</span> with respect to <span class="math inline">\(\theta_{i}\)</span> to find that: <span class="math display">\[\mu_{i}=b&#39;(\theta_{i})=n_{i}\frac{\exp(\theta_{i})}{1+\exp(\theta_{i})}=n_{i}\tau_{i},\]</span> as expected.<br />
+<span class="math display">\[v_{i}=a_{i}(\phi)b&#39;&#39;(\theta_{i})=n_{i}\frac{\exp(\theta_{i})}{(1+\exp(\theta_{i}))^{2}}=n_{i}\tau_{i}(1-\tau_{i}),\]</span> again agreeing with our knowledge of basic statistics.</p>
+</div>
+</div>
+<div id="sec:CanonLink" class="section level2">
+<h2><span class="header-section-number">4.4</span> Canonical Link functions</h2>
+<p><span class="math display">\[f(y_{i})=\exp\left\{\frac{y_{i}\theta_{i}-b(\theta_{i})}{a_{i}(\phi)}+c(y_{i},\phi)\right\}\]</span> In this form, <span class="math inline">\(\theta\)</span> is known as the canonical parameter and <span class="math inline">\(\phi\)</span> as the dispersion parameter. If <span class="math inline">\(\theta=g(\mu)\)</span> for some function <span class="math inline">\(g\)</span> of the mean <span class="math inline">\(\mu\)</span>, then <span class="math inline">\(g(\mu)\)</span> is known as the canonical link function.</p>
+<table>
+<caption><span id="tab:Distributionlists">Table 4.1: </span> Distributions with link function.</caption>
+<colgroup>
+<col width="10%" />
+<col width="9%" />
+<col width="29%" />
+<col width="51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Link Name</th>
+<th>Link Function</th>
+<th>Mean Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal</td>
+<td>Identity</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\mu\)</span></td>
+<td><span class="math inline">\(\mu=X\mathbf{\beta}\)</span></td>
+</tr>
+<tr class="even">
+<td>Exponential</td>
+<td>Inverse</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\mu^{-1}\)</span></td>
+<td><span class="math inline">\(\mu=(X\mathbf{\beta})^{-1}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Gamma</td>
+<td>Inverse</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\mu^{-1}\)</span></td>
+<td><span class="math inline">\(\mu=(X\mathbf{\beta})^{-1}\)</span></td>
+</tr>
+<tr class="even">
+<td>Inverse Gaussian</td>
+<td>Inverse Squared</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\mu^{-2}\)</span></td>
+<td><span class="math inline">\(\mu=(X\mathbf{\beta})^{-1/2}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Poisson</td>
+<td>Log</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\log(\mu)\)</span></td>
+<td><span class="math inline">\(\mu=\exp(X\mathbf{\beta})\)</span></td>
+</tr>
+<tr class="even">
+<td>Binomial</td>
+<td>Logit</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\log\left(\frac{\mu}{1-\mu}\right)\)</span></td>
+<td><span class="math inline">\(\mu=\frac{\exp(X\mathbf{\beta})}{1+\exp(X\mathbf{\beta})}=\frac{1}{1+\exp(-X\mathbf{\beta})}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Multinomial</td>
+<td>Logit</td>
+<td><span class="math inline">\(X\mathbf{\beta}=\log\left(\frac{\mu}{1-\mu}\right)\)</span></td>
+<td><span class="math inline">\(\mu=\frac{\exp(X\mathbf{\beta})}{1+\exp(X\mathbf{\beta})}=\frac{1}{1+\exp(-X\mathbf{\beta})}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In the exponential family of distributions, the parameter <span class="math inline">\(\theta\)</span> is known as the canonical parameter. Knowing the expression for your canonical parameter will tell you your canonical link function.</p>
+<div id="example-gamma-distribution" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Example: Gamma distribution</h3>
+<span class="math display">\[\begin{eqnarray}
+f(y)&amp;=&amp;\frac{\beta^{\alpha}}{\Gamma(\alpha)}y^{\alpha-1}\exp(-\beta y)\ \textrm{for } y, \alpha, \beta &gt;0 \nonumber\\
+&amp;=&amp;\exp\left(-y\beta+(\alpha-1)\log y+\alpha\log\beta-\log\left(\Gamma(\alpha)\right)\right)\nonumber\\
+&amp;=&amp;\exp\left(\frac{y\frac{-\beta}{\alpha}+\frac{\alpha}{\alpha}\log\beta}{\frac{1}{\alpha}}+(\alpha-1)\log y-\log\left(\Gamma\left(\alpha\right)\right)\right)\nonumber\\
+&amp;=&amp;\exp\left(\frac{y\frac{\beta}{\alpha}-\log\beta}{\frac{-1}{\alpha}}+(\alpha-1)\log y-\log\left(\Gamma\left(\alpha\right)\right)\right)\nonumber
+\end{eqnarray}\]</span>
+now if <span class="math inline">\(\theta=\frac{\beta}{\alpha}\)</span> and <span class="math inline">\(\phi=\frac{-1}{\alpha}\)</span> so that <span class="math inline">\(\alpha=\frac{-1}{\phi}\)</span> and <span class="math inline">\(\beta=-\theta\alpha=\frac{-\theta}{\phi}\)</span> then:
+<span class="math display">\[\begin{eqnarray}
+f(y)&amp;=&amp;\exp\left(\frac{y\theta-\log\left(-\frac{\theta}{\phi}\right)}{\phi}+\left(-\frac{1}{\phi}-1\right)\log y-\log\left(\Gamma\left(-\frac{1}{\phi}\right)\right)\right)\nonumber\\
+&amp;=&amp;\exp\left(\frac{y\theta-\log\theta}{\phi}+\frac{\log -\phi}{\phi}-\left(\frac{1}{\phi}+1\right)\log y-\log\left(\Gamma\left(-\frac{1}{\phi}\right)\right)\right)\nonumber
+\end{eqnarray}\]</span>
+Now recall that <span class="math inline">\(\mathbf{E}(Y_{i})=\mu_{i}=b&#39;(\theta_{i})\)</span> so that comparing to our expression above: <span class="math display">\[b(\theta)=\log(\theta)\]</span> so that <span class="math display">\[b&#39;(\theta)=\frac{1}{\theta}=\mu=\frac{\alpha}{\beta}.\]</span> The variance can be found to be <span class="math inline">\(b&#39;&#39;(\theta)\phi=\frac{\phi}{-\theta^{2}}=\frac{-1}{\alpha}\frac{-\alpha^{2}}{\beta^{2}}=\frac{\alpha}{\beta^{2}}\)</span>. Then parameterise the distribution in terms of its expected value:
+<span class="math display">\[\begin{eqnarray}
+f(y)&amp;=&amp;\exp\left(\frac{y\frac{1}{\mu}-\log\frac{1}{\mu}}{\phi}+\frac{\log -\phi}{\phi}-(\frac{1}{\phi}+1)\log y-\log\left(\Gamma\left(-\frac{1}{\phi}\right)\right)\right)\nonumber\\
+&amp;=&amp;\exp\left(\frac{y\mu^{-1}-\log\mu^{-1}}{\phi}+\frac{\log -\phi}{\phi}-\left(\frac{1}{\phi}+1\right)\log y-\log\left(\Gamma\left(-\frac{1}{\phi}\right)\right)\right)\nonumber\\
+&amp;=&amp;\exp\left(\frac{y\mu^{-1}+\log\mu}{\phi}+\frac{\log -\phi}{\phi}-\left(\frac{1}{\phi}+1\right)\log y-\log\left(\Gamma\left(-\frac{1}{\phi}\right)\right)\right)\nonumber
+\end{eqnarray}\]</span>
+<p>indicating that the canonical link function is: <span class="math display">\[g(\mu)=\frac{1}{\mu}=\mu^{-1}.\]</span></p>
+</div>
+<div id="further-examples" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Further Examples</h3>
+<p>Use the same procedure to show that the canonical link functions for the Poisson and Binomial distributions are those listed in the table <a href="the-glm-model.html#tab:Distributionlists">4.1</a>.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="not-exponential-family.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="poisson-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

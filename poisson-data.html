@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to Generalised Linear Modelling using R</title>
+  <meta name="description" content="Introduction to Generalised Linear Modelling using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to Generalised Linear Modelling using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to Generalised Linear Modelling using R" />
+  
+  
+  
+
+<meta name="author" content="Deirdre Toher">
+
+
+<meta name="date" content="2018-01-01">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="the-glm-model.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="the-exponential-family.html"><a href="the-exponential-family.html"><i class="fa fa-check"></i><b>2</b> The Exponential Family</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-exponential-family.html"><a href="the-exponential-family.html#the-natural-exponential-family"><i class="fa fa-check"></i><b>2.1</b> The Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.2" data-path="the-exponential-family.html"><a href="the-exponential-family.html#sec:ExpFamily"><i class="fa fa-check"></i><b>2.2</b> The Exponential Family (more general definition)</a></li>
+<li class="chapter" data-level="2.3" data-path="the-exponential-family.html"><a href="the-exponential-family.html#proof-that-the-beta-distribution-is-a-member-of-the-exponential-family"><i class="fa fa-check"></i><b>2.3</b> Proof that the Beta distribution is a member of the Exponential Family</a></li>
+<li class="chapter" data-level="2.4" data-path="the-exponential-family.html"><a href="the-exponential-family.html#example-normal-distribution-is-a-member-of-the-natural-exponential-family"><i class="fa fa-check"></i><b>2.4</b> Example: Normal distribution is a member of the Natural Exponential Family</a></li>
+<li class="chapter" data-level="2.5" data-path="the-exponential-family.html"><a href="the-exponential-family.html#in-the-exponential-family"><i class="fa fa-check"></i><b>2.5</b> In the Exponential Family</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="not-exponential-family.html"><a href="not-exponential-family.html"><i class="fa fa-check"></i><b>3</b> Not Exponential Family</a></li>
+<li class="chapter" data-level="4" data-path="the-glm-model.html"><a href="the-glm-model.html"><i class="fa fa-check"></i><b>4</b> The GLM Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:Link"><i class="fa fa-check"></i><b>4.1</b> Link function</a></li>
+<li class="chapter" data-level="4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#poisson-errors-and-log-link"><i class="fa fa-check"></i><b>4.2</b> Poisson Errors and Log Link</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-poisson-distribution"><i class="fa fa-check"></i><b>4.2.1</b> The Poisson Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="the-glm-model.html"><a href="the-glm-model.html#binomial-errors-and-logit-link"><i class="fa fa-check"></i><b>4.3</b> Binomial Errors and Logit Link</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="the-glm-model.html"><a href="the-glm-model.html#the-binomial-distribution"><i class="fa fa-check"></i><b>4.3.1</b> The Binomial Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="the-glm-model.html"><a href="the-glm-model.html#sec:CanonLink"><i class="fa fa-check"></i><b>4.4</b> Canonical Link functions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="the-glm-model.html"><a href="the-glm-model.html#example-gamma-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Example: Gamma distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-glm-model.html"><a href="the-glm-model.html#further-examples"><i class="fa fa-check"></i><b>4.4.2</b> Further Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="poisson-data.html"><a href="poisson-data.html"><i class="fa fa-check"></i><b>5</b> Poisson data</a><ul>
+<li class="chapter" data-level="5.1" data-path="poisson-data.html"><a href="poisson-data.html#poisson-examples"><i class="fa fa-check"></i><b>5.1</b> Poisson Examples</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="poisson-data.html"><a href="poisson-data.html#example-1-poisson-response-with-one-covariate"><i class="fa fa-check"></i><b>5.1.1</b> Example 1: Poisson response with one covariate</a></li>
+<li class="chapter" data-level="5.1.2" data-path="poisson-data.html"><a href="poisson-data.html#example-2-poisson-response-with-two-factors"><i class="fa fa-check"></i><b>5.1.2</b> Example 2: Poisson response with two factors</a></li>
+<li class="chapter" data-level="5.1.3" data-path="poisson-data.html"><a href="poisson-data.html#example-3-poisson-response-with-two-covariates"><i class="fa fa-check"></i><b>5.1.3</b> Example 3: Poisson response with two covariates</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="poisson-data.html"><a href="poisson-data.html#offsets"><i class="fa fa-check"></i><b>5.2</b> Offsets</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="poisson-data.html"><a href="poisson-data.html#example-4-insurance-data"><i class="fa fa-check"></i><b>5.2.1</b> Example 4: Insurance data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="poisson-data.html"><a href="poisson-data.html#practical-exercises"><i class="fa fa-check"></i><b>5.3</b> Practical exercises</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="poisson-data.html"><a href="poisson-data.html#exercise-1-missing-persons-data"><i class="fa fa-check"></i><b>5.3.1</b> Exercise 1: Missing persons data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="poisson-data.html"><a href="poisson-data.html#exercise-2-aids-data"><i class="fa fa-check"></i><b>5.3.2</b> Exercise 2: AIDS data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="poisson-data.html"><a href="poisson-data.html#exercise-3-composite-material-cracks-data"><i class="fa fa-check"></i><b>5.3.3</b> Exercise 3: Composite material cracks data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="poisson-data.html"><a href="poisson-data.html#over-dispersion"><i class="fa fa-check"></i><b>5.4</b> Over-dispersion</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="poisson-data.html"><a href="poisson-data.html#example-5-poisson-slugs"><i class="fa fa-check"></i><b>5.4.1</b> Example 5: Poisson (slugs)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Generalised Linear Modelling using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="poisson-data" class="section level1">
+<h1><span class="header-section-number">5</span> Poisson data</h1>
+<p>Natural model for simple counts: <span class="math display">\[y_{i}\sim \ Poisson(\mu_{i})\]</span> where <span class="math inline">\(g(\mu_{i})=x_{i}&#39;\beta\)</span>.</p>
+<p>R allows the use of the three following links:</p>
+<ol style="list-style-type: decimal">
+<li><p>log: This is the most common link (hence also the default link). <span class="math display">\[\log(\mu_{i})=x_{i}&#39;\beta\]</span> Note with this link: <span class="math display">\[\mu_{i}=\exp(x_{i}&#39;\beta)=\prod_{j}\exp(x_{ij}\beta_{j})\]</span> that is a multiplicative structure for <span class="math inline">\(\mu_{i}\)</span>. With this link <span class="math inline">\(\mu_{i}\geq 0\)</span> and <span class="math inline">\(-\infty &lt; x_{i}&#39;\beta&lt;\infty\)</span>.</p></li>
+<li><p>sqrt: <span class="math display">\[\sqrt(\mu_{i})=x_{i}&#39;\beta\]</span> Thus: <span class="math display">\[\mu_{i}=\left(x_{i}&#39;\beta\right)^{2}.\]</span> With this link <span class="math inline">\(\mu_{i}\geq 0\)</span> and <span class="math inline">\(-\infty &lt; x_{i}&#39;\beta&lt;\infty\)</span>.</p></li>
+<li><p>identity: <span class="math display">\[\mu_{i}=x_{i}&#39;\beta\]</span> Note: with this link <span class="math inline">\(\mu_{i}\)</span> is not guaranteed to be greater than zero and thus we have to be careful when using it.</p></li>
+</ol>
+<div id="poisson-examples" class="section level2">
+<h2><span class="header-section-number">5.1</span> Poisson Examples</h2>
+<div id="example-1-poisson-response-with-one-covariate" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Example 1: Poisson response with one covariate</h3>
+<p>The following data gives Poisson observations y for three values of a covariate x (x=0,1,2). Compare the fits of the model <span class="math display">\[\eta_{i}=\beta_{0}+\beta^{x}x_{i}\]</span></p>
+<p>under the log and sqrt links. Can the model be simplified?</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">x=0</th>
+<th align="center">x=1</th>
+<th align="center">x=2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1,0,1</td>
+<td align="center">2,3,2</td>
+<td align="center">3,4,2</td>
+</tr>
+<tr class="even">
+<td align="center">3,0,2</td>
+<td align="center">1,0,2</td>
+<td align="center">0,5,1</td>
+</tr>
+<tr class="odd">
+<td align="center">0,1,2</td>
+<td align="center">1,4,1</td>
+<td align="center">4,2,3</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">3,1</td>
+</tr>
+</tbody>
+</table>
+<p>Read in the data considering each level of the covariate in turn.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> y&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>)
+ x&lt;-<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>),<span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">9</span>),<span class="kw">rep</span>(<span class="dv">2</span>,<span class="dv">11</span>))</code></pre></div>
+<p>Some Exploratory Data Analysis shown in Figure <a href="poisson-data.html#fig:edaPoisson1">5.1</a> shows possibility of Poisson counts with mean increasing with x.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">plot</span>(x,y)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:edaPoisson1"></span>
+<img src="_main_files/figure-html/edaPoisson1-1.png" alt="Exploratory Data: Analysis Poisson Counts" width="576" />
+<p class="caption">
+Figure 5.1: Exploratory Data: Analysis Poisson Counts
+</p>
+</div>
+<p>Tidy up the inputted values - by storing them in a data frame and then removing the individual variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex1.df&lt;-<span class="kw">data.frame</span>(y,x)
+ ex1.df</code></pre></div>
+<pre><code>   y x
+1  1 0
+2  0 0
+3  1 0
+4  3 0
+5  0 0
+6  2 0
+7  0 0
+8  1 0
+9  2 0
+10 1 0
+11 2 1
+12 3 1
+13 2 1
+14 1 1
+15 0 1
+16 2 1
+17 1 1
+18 4 1
+19 1 1
+20 3 2
+21 4 2
+22 2 2
+23 0 2
+24 5 2
+25 1 2
+26 4 2
+27 2 2
+28 3 2
+29 3 2
+30 1 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">rm</span>(x,y)</code></pre></div>
+<p>Begin by fitting the model using the Poisson default log link.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex1.glm1&lt;-<span class="kw">glm</span>(y~x,poisson,<span class="dt">data=</span>ex1.df)
+ <span class="kw">summary</span>(ex1.glm1)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ x, family = poisson, data = ex1.df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.2691  -0.5870  -0.1265   0.6162   1.4921  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept)   0.1239     0.2608   0.475    0.635  
+x             0.4109     0.1705   2.409    0.016 *
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 35.057  on 29  degrees of freedom
+Residual deviance: 28.941  on 28  degrees of freedom
+AIC: 97.474
+
+Number of Fisher Scoring iterations: 5</code></pre>
+<p>Then fit the model using the sqrt link.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex1.glm2&lt;-<span class="kw">glm</span>(y~x,<span class="kw">poisson</span>(<span class="dt">link=</span>sqrt),<span class="dt">data=</span>ex1.df)
+ <span class="kw">summary</span>(ex1.glm2)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ x, family = poisson(link = sqrt), data = ex1.df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.2609  -0.6219  -0.1038   0.6384   1.4813  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)   1.0523     0.1451   7.251 4.15e-13 ***
+x             0.2732     0.1092   2.502   0.0124 *  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 35.057  on 29  degrees of freedom
+Residual deviance: 28.905  on 28  degrees of freedom
+AIC: 97.438
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>As can be seen in the output above, the sqrt link has a slightly better deviance (NB no formal test between links – prefer one with lower deviance). For this link we shall try to see if the model can be simplified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(ex1.glm2,<span class="dt">test=</span><span class="st">&quot;Chi&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model: poisson, link: sqrt
+
+Response: y
+
+Terms added sequentially (first to last)
+
+     Df Deviance Resid. Df Resid. Dev Pr(&gt;Chi)  
+NULL                    29     35.057           
+x     1   6.1517        28     28.905  0.01313 *
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(ex1.glm2)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:diagPoisson1"></span>
+<img src="_main_files/figure-html/diagPoisson1-1.png" alt="Diagnostic Plots: Poisson Counts" width="576" />
+<p class="caption">
+Figure 5.2: Diagnostic Plots: Poisson Counts
+</p>
+</div>
+<p>From this we see the covariate is significant and thus we can not simplify the model. The residual plot in Figure <a href="poisson-data.html#fig:diagPoisson1">5.2</a> gives us no cause for concern.</p>
+</div>
+<div id="example-2-poisson-response-with-two-factors" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Example 2: Poisson response with two factors</h3>
+<p>The following data records Poisson observations over two factors A and B at 3 and 2 levels respectively. Find a suitable model for the data.</p>
+<p>Read in the data a row at a time (e.g. level 1 then level 2 of B). Create the data frame. Then plot a histogram of the counts ignoring the factors; it shows possibly Poisson count data in Figure <a href="poisson-data.html#fig:histP2">5.3</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> y&lt;-<span class="kw">c</span>(<span class="dv">14</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">16</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">16</span>,<span class="dv">14</span>,<span class="dv">20</span>,<span class="dv">24</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">14</span>,<span class="dv">18</span>,<span class="dv">18</span>,<span class="dv">26</span>,<span class="dv">24</span>,<span class="dv">24</span>)
+
+ A&lt;-<span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">5</span>)))
+ B&lt;-<span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw">c</span>(<span class="dv">13</span>,<span class="dv">15</span>)))
+
+ ex2.df&lt;-<span class="kw">data.frame</span>(y,A,B)
+ ex2.df</code></pre></div>
+<pre><code>    y A B
+1  14 1 1
+2   6 1 1
+3   6 1 1
+4   8 1 1
+5   8 2 1
+6  16 2 1
+7  10 2 1
+8   9 2 1
+9  10 2 1
+10 16 3 1
+11 14 3 1
+12 20 3 1
+13 24 3 1
+14  8 1 2
+15 10 1 2
+16  8 2 2
+17 10 2 2
+18 12 2 2
+19 12 2 2
+20  9 2 2
+21 10 2 2
+22  6 2 2
+23 14 2 2
+24 18 3 2
+25 18 3 2
+26 26 3 2
+27 24 3 2
+28 24 3 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">rm</span>(y,A,B)
+ <span class="kw">attach</span>(ex2.df)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(y)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:histP2"></span>
+<img src="_main_files/figure-html/histP2-1.png" alt="Histogram of y variable" width="576" />
+<p class="caption">
+Figure 5.3: Histogram of y variable
+</p>
+</div>
+<p>Plotting boxplots in Figure <a href="poisson-data.html#fig:boxP2">5.4</a> for each factor allows the further exploration of the data; suggesting that both levels of B may be the same and that levels 1 and 2 of A might be the same.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(y~A,<span class="dt">xlab=</span><span class="st">&quot;A&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Counts&quot;</span>)
+<span class="kw">plot</span>(y~B,<span class="dt">xlab=</span><span class="st">&quot;B&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Counts&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:boxP2"></span>
+<img src="_main_files/figure-html/boxP2-1.png" alt="Boxplots of counts against Levels" width="576" />
+<p class="caption">
+Figure 5.4: Boxplots of counts against Levels
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">detach</span>(ex2.df)</code></pre></div>
+<p>Fit the full model first; note deviance is not zero as there are replicates at various factor combinations. Then use the step command to knock out terms as per the code and output below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex2.glm.full&lt;-<span class="kw">glm</span>(y~A*B,<span class="dt">family=</span>poisson,<span class="dt">data=</span>ex2.df)
+ex2.glm.full</code></pre></div>
+<pre><code>
+Call:  glm(formula = y ~ A * B, family = poisson, data = ex2.df)
+
+Coefficients:
+(Intercept)           A2           A3           B2        A2:B2  
+    2.14007      0.22079      0.77770      0.05716     -0.10300  
+      A3:B2  
+    0.11611  
+
+Degrees of Freedom: 27 Total (i.e. Null);  22 Residual
+Null Deviance:      70.18 
+Residual Deviance: 18.58    AIC: 152.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex2.glm1&lt;-<span class="kw">step</span>(ex2.glm.full)</code></pre></div>
+<pre><code>Start:  AIC=152.07
+y ~ A * B
+
+       Df Deviance    AIC
+- A:B   2   19.475 148.96
+&lt;none&gt;      18.579 152.07
+
+Step:  AIC=148.96
+y ~ A + B
+
+       Df Deviance    AIC
+- B     1   20.026 147.51
+&lt;none&gt;      19.475 148.96
+- A     2   68.916 194.40
+
+Step:  AIC=147.51
+y ~ A
+
+       Df Deviance    AIC
+&lt;none&gt;      20.026 147.51
+- A     2   70.184 193.67</code></pre>
+<p>The step algorithm leads to a model that has just factor A in it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(ex2.glm1)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ A, family = poisson, data = ex2.df)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.51214  -0.60109  -0.09749   0.57646   1.66174  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)   2.1595     0.1387  15.572  &lt; 2e-16 ***
+A2            0.1734     0.1634   1.061    0.289    
+A3            0.8582     0.1571   5.465 4.64e-08 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 70.184  on 27  degrees of freedom
+Residual deviance: 20.026  on 25  degrees of freedom
+AIC: 147.51
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>However, examination of the parameter values and t statistics suggest that level 2 of A may not be different to level 1 of A. Therefore create a new factor variable, ATRY, which has levels 1 and 2 of A the same. Add this to the data frame and remove unwanted variable. Fit new model with ATRY instead of A.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ATRY&lt;-<span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">10</span>,<span class="dv">5</span>)))
+ex2.df&lt;-<span class="kw">data.frame</span>(ex2.df,ATRY)
+<span class="kw">rm</span>(ATRY)
+ex2.glm2&lt;-<span class="kw">glm</span>(y~ATRY,<span class="dt">family=</span>poisson,<span class="dt">data=</span>ex2.df)</code></pre></div>
+<p>We need to check that this model is better and if so whether it can be further simplified (unlikely from Wald statistics).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(ex2.glm2)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ ATRY, family = poisson, data = ex2.df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.5121  -0.5908  -0.0158   0.7029   1.8166  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  2.28131    0.07332  31.113  &lt; 2e-16 ***
+ATRY2        0.73640    0.10398   7.082 1.42e-12 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 70.184  on 27  degrees of freedom
+Residual deviance: 21.181  on 26  degrees of freedom
+AIC: 146.67
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(ex2.glm2,ex2.glm1,<span class="dt">test=</span><span class="st">&quot;Chi&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model 1: y ~ ATRY
+Model 2: y ~ A
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
+1        26     21.181                     
+2        25     20.026  1   1.1545   0.2826</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">drop1</span>(ex2.glm2)</code></pre></div>
+<pre><code>Single term deletions
+
+Model:
+y ~ ATRY
+       Df Deviance    AIC
+&lt;none&gt;      21.181 146.67
+ATRY    1   70.184 193.67</code></pre>
+<p>It appears that modelling with the reduced levels of A is better and that the model can not be further simplified.</p>
+<p>Residuals in Figure <a href="poisson-data.html#fig:ex2Pdiag">5.5</a> give us no cause for concern.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(ex2.glm2)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ex2Pdiag"></span>
+<img src="_main_files/figure-html/ex2Pdiag-1.png" alt="Diagnostic Plots" width="576" />
+<p class="caption">
+Figure 5.5: Diagnostic Plots
+</p>
+</div>
+</div>
+<div id="example-3-poisson-response-with-two-covariates" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Example 3: Poisson response with two covariates</h3>
+<p>The following data shows a Poisson response y together with two associated covariate values x1 and x2. Set up data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> y&lt;-<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">4</span>,<span class="dv">24</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">43</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">26</span>,<span class="dv">3</span>,<span class="dv">2</span>)
+ x1&lt;-<span class="kw">c</span>(<span class="fl">14.154</span>,<span class="fl">31.817</span>,<span class="fl">2.203</span>,<span class="fl">22.646</span>,<span class="fl">8.585</span>,<span class="fl">2.160</span>,<span class="fl">53.517</span>,<span class="fl">6.234</span>,<span class="fl">2.858</span>,<span class="fl">34.124</span>,<span class="fl">2.484</span>,<span class="fl">6.619</span>)
+ x2&lt;-<span class="kw">c</span>(<span class="fl">0.1132</span>,<span class="fl">4.5437</span>,<span class="fl">5.1989</span>,<span class="fl">15.0614</span>,<span class="fl">2.6844</span>,<span class="fl">11.2151</span>,<span class="fl">22.5853</span>,<span class="fl">0.7164</span>,<span class="fl">0.8493</span>,<span class="dv">16</span>,<span class="fl">5.6245</span>,<span class="fl">0.1385</span>)
+ ex3.df&lt;-<span class="kw">data.frame</span>(y,x1,x2)
+ ex3.df</code></pre></div>
+<pre><code>    y     x1      x2
+1   3 14.154  0.1132
+2  10 31.817  4.5437
+3   4  2.203  5.1989
+4  24 22.646 15.0614
+5   5  8.585  2.6844
+6   4  2.160 11.2151
+7  43 53.517 22.5853
+8   3  6.234  0.7164
+9   2  2.858  0.8493
+10 26 34.124 16.0000
+11  3  2.484  5.6245
+12  2  6.619  0.1385</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">rm</span>(y,x1,x2)</code></pre></div>
+<p>Then plot the response against each of the covariates; in both cases there appears to be an increase in y with x as illustrated in Figure <a href="poisson-data.html#fig:p3scatter">5.6</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">attach</span>(ex3.df) 
+ <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(x1,y)
+ <span class="kw">plot</span>(x2,y)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:p3scatter"></span>
+<img src="_main_files/figure-html/p3scatter-1.png" alt="Plotting y against both x1 and x2" width="576" />
+<p class="caption">
+Figure 5.6: Plotting y against both x1 and x2
+</p>
+</div>
+<p>Try fitting an additive model with the two covariates.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex3.glm1&lt;-<span class="kw">glm</span>(y~x1+x2,<span class="dt">family=</span>poisson,<span class="dt">data=</span>ex3.df)
+<span class="kw">summary</span>(ex3.glm1)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ x1 + x2, family = poisson, data = ex3.df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.3794  -0.7879  -0.3445   0.4833   2.0939  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) 1.048961   0.183864   5.705 1.16e-08 ***
+x1          0.019498   0.009257   2.106 0.035182 *  
+x2          0.081492   0.022829   3.570 0.000357 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 142.352  on 11  degrees of freedom
+Residual deviance:  11.962  on  9  degrees of freedom
+AIC: 62.063
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>The deviance 11.962 on 9 degrees of freedom is a respectable figure. Need to check diagnostic plots in Figure <a href="poisson-data.html#fig:p3diagA">5.7</a> to check quality of fit okay.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(ex3.glm1)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:p3diagA"></span>
+<img src="_main_files/figure-html/p3diagA-1.png" alt="Diagnostic Plots" width="576" />
+<p class="caption">
+Figure 5.7: Diagnostic Plots
+</p>
+</div>
+<p>The plot of the residuals against fitted values shows a clear parabolic trend. The normal score plot is slightly curved. The 7th observation appears to have a lot of leverage. By plotting deviances against individual covariates in Figure <a href="poisson-data.html#fig:p3resA">5.8</a> we aim to find out more.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(x1,ex3.glm1$res)
+ <span class="kw">plot</span>(x2,ex3.glm1$res)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:p3resA"></span>
+<img src="_main_files/figure-html/p3resA-1.png" alt="Residual Plots" width="576" />
+<p class="caption">
+Figure 5.8: Residual Plots
+</p>
+</div>
+<p>The plot against x1 shows a divergent linear trend whilst the plot against x2 shows a fan. It would seem to be sensible to compress the x1 scale by taking logs which might sort out the plot against the deviance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> logx1 &lt;-<span class="st"> </span><span class="kw">log</span>(x1)
+ <span class="kw">detach</span>(ex3.df)
+ ex3.df&lt;-<span class="kw">data.frame</span>(ex3.df,logx1)
+ <span class="kw">rm</span>(logx1)
+ ex3.df</code></pre></div>
+<pre><code>    y     x1      x2     logx1
+1   3 14.154  0.1132 2.6499973
+2  10 31.817  4.5437 3.4600007
+3   4  2.203  5.1989 0.7898201
+4  24 22.646 15.0614 3.1199832
+5   5  8.585  2.6844 2.1500165
+6   4  2.160 11.2151 0.7701082
+7  43 53.517 22.5853 3.9799994
+8   3  6.234  0.7164 1.8300182
+9   2  2.858  0.8493 1.0501221
+10 26 34.124 16.0000 3.5300009
+11  3  2.484  5.6245 0.9098702
+12  2  6.619  0.1385 1.8899443</code></pre>
+<p>Fit the new model with the new variable log(x1).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex3.glm2&lt;-<span class="kw">glm</span>(y~logx1+x2, <span class="dt">family =</span> poisson, <span class="dt">data =</span> ex3.df)
+ ex3.glm2</code></pre></div>
+<pre><code>
+Call:  glm(formula = y ~ logx1 + x2, family = poisson, data = ex3.df)
+
+Coefficients:
+(Intercept)        logx1           x2  
+    0.34705      0.44301      0.07829  
+
+Degrees of Freedom: 11 Total (i.e. Null);  9 Residual
+Null Deviance:      142.4 
+Residual Deviance: 4.348    AIC: 54.45</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(ex3.glm2)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ logx1 + x2, family = poisson, data = ex3.df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.8047  -0.4720  -0.1825   0.2832   1.2641  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  0.34705    0.30770   1.128  0.25937    
+logx1        0.44301    0.13495   3.283  0.00103 ** 
+x2           0.07829    0.01681   4.657 3.21e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 142.3521  on 11  degrees of freedom
+Residual deviance:   4.3478  on  9  degrees of freedom
+AIC: 54.448
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>The new deviance is an improvement, but what about the residuals in Figure <a href="poisson-data.html#fig:p3diagB">5.9</a>?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">attach</span>(ex3.df)
+ <span class="kw">plot</span>(ex3.glm2)
+ <span class="kw">plot</span>(x1,ex3.glm2$res)  
+ <span class="kw">plot</span>(x2,ex3.glm2$res)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:p3diagB"></span>
+<img src="_main_files/figure-html/p3diagB-1.png" alt="Diagnostic Plots and Residual Plots: including logarithm term" width="576" />
+<p class="caption">
+Figure 5.9: Diagnostic Plots and Residual Plots: including logarithm term
+</p>
+</div>
+<p>The normal score plot is reasonably linear apart from a strange tail. The plot of the residuals against fitted values is better, but possible a detectable arc? The plot of the deviance against x1 is now sorted. The plot of the deviance against x2 now seems like a divergent arc. This might indicate a quadratic or square root of x2 is needed; we shall create the new variables sqx2 and sqrtx2 and try models with them instead of x2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> sqx2&lt;-x2*x2
+ sqrtx2&lt;-<span class="kw">sqrt</span>(x2)
+ <span class="kw">detach</span>(ex3.df)
+ ex3.df&lt;-<span class="kw">data.frame</span>(ex3.df,sqx2,sqrtx2)
+ <span class="kw">rm</span>(sqx2, sqrtx2)
+ ex3.df</code></pre></div>
+<pre><code>    y     x1      x2     logx1         sqx2    sqrtx2
+1   3 14.154  0.1132 2.6499973   0.01281424 0.3364521
+2  10 31.817  4.5437 3.4600007  20.64520969 2.1315956
+3   4  2.203  5.1989 0.7898201  27.02856121 2.2801096
+4  24 22.646 15.0614 3.1199832 226.84576996 3.8809020
+5   5  8.585  2.6844 2.1500165   7.20600336 1.6384139
+6   4  2.160 11.2151 0.7701082 125.77846801 3.3488953
+7  43 53.517 22.5853 3.9799994 510.09577609 4.7523994
+8   3  6.234  0.7164 1.8300182   0.51322896 0.8464042
+9   2  2.858  0.8493 1.0501221   0.72131049 0.9215747
+10 26 34.124 16.0000 3.5300009 256.00000000 4.0000000
+11  3  2.484  5.6245 0.9098702  31.63500025 2.3716028
+12  2  6.619  0.1385 1.8899443   0.01918225 0.3721559</code></pre>
+<p>Trying the new models:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex3.glm3&lt;-<span class="kw">glm</span>(y~logx1+sqx2, <span class="dt">family =</span> poisson, <span class="dt">data =</span> ex3.df)
+ ex3.glm3</code></pre></div>
+<pre><code>
+Call:  glm(formula = y ~ logx1 + sqx2, family = poisson, data = ex3.df)
+
+Coefficients:
+(Intercept)        logx1         sqx2  
+   0.501070     0.527566     0.002563  
+
+Degrees of Freedom: 11 Total (i.e. Null);  9 Residual
+Null Deviance:      142.4 
+Residual Deviance: 12.32    AIC: 62.42</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(ex3.glm3)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ logx1 + sqx2, family = poisson, data = ex3.df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.5991  -0.7583  -0.1730   0.4160   2.0488  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) 0.5010699  0.3483684   1.438 0.150339    
+logx1       0.5275662  0.1427855   3.695 0.000220 ***
+sqx2        0.0025633  0.0006604   3.882 0.000104 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 142.35  on 11  degrees of freedom
+Residual deviance:  12.32  on  9  degrees of freedom
+AIC: 62.421
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex3.glm4&lt;-<span class="kw">glm</span>(y~logx1+sqrtx2, <span class="dt">family =</span> poisson, <span class="dt">data =</span> ex3.df)
+ ex3.glm4</code></pre></div>
+<pre><code>
+Call:  glm(formula = y ~ logx1 + sqrtx2, family = poisson, data = ex3.df)
+
+Coefficients:
+(Intercept)        logx1       sqrtx2  
+    -0.2341       0.4747       0.4535  
+
+Degrees of Freedom: 11 Total (i.e. Null);  9 Residual
+Null Deviance:      142.4 
+Residual Deviance: 1.502    AIC: 51.6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(ex3.glm4)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ logx1 + sqrtx2, family = poisson, data = ex3.df)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.55196  -0.25190  -0.06186   0.14680   0.81518  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.23408    0.30879  -0.758 0.448428    
+logx1        0.47471    0.12242   3.878 0.000105 ***
+sqrtx2       0.45347    0.09362   4.844 1.27e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 142.352  on 11  degrees of freedom
+Residual deviance:   1.502  on  9  degrees of freedom
+AIC: 51.602
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>The deviance using sqx2 is 12.32 on 9 d.f. which is not worth following up after 4.348 with the previous model. The deviance for the model with sqrtx2 looks promising, but what about the residual plots in Figure <a href="poisson-data.html#fig:p3diagC">5.10</a>?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+ <span class="kw">attach</span>(ex3.df)
+ <span class="kw">plot</span>(ex3.glm4)
+ <span class="kw">plot</span>(x1,ex3.glm4$res)  
+ <span class="kw">plot</span>(x2,ex3.glm4$res)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:p3diagC"></span>
+<img src="_main_files/figure-html/p3diagC-1.png" alt="Diagnostic Plots and Residual Plots: including square root of x2" width="576" />
+<p class="caption">
+Figure 5.10: Diagnostic Plots and Residual Plots: including square root of x2
+</p>
+</div>
+<p>The normal score plot is slightly concave. The plot of the residuals against fitted values is okay, but possibly a fan? The plot of residuals against x2 is better but still shows a divergent fan. The plot of residuals against x1 is okay. The plot of the square root of the absolute deviance residuals against predicted values shows a clear divergent arc. The leverage of the 7th data point is not as disturbing any more.</p>
+<p>Since x1 is okay we shall concentrate on x2. Taking the square root of x2 has helped, so we shall try a new variable that is the fourth root.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> fourthx2&lt;-x2^<span class="fl">0.25</span>
+ <span class="kw">detach</span>(ex3.df)
+ ex3.df&lt;-<span class="kw">data.frame</span>(ex3.df,fourthx2)
+ <span class="kw">rm</span>(fourthx2)
+ ex3.df</code></pre></div>
+<pre><code>    y     x1      x2     logx1         sqx2    sqrtx2  fourthx2
+1   3 14.154  0.1132 2.6499973   0.01281424 0.3364521 0.5800449
+2  10 31.817  4.5437 3.4600007  20.64520969 2.1315956 1.4599985
+3   4  2.203  5.1989 0.7898201  27.02856121 2.2801096 1.5100032
+4  24 22.646 15.0614 3.1199832 226.84576996 3.8809020 1.9700005
+5   5  8.585  2.6844 2.1500165   7.20600336 1.6384139 1.2800054
+6   4  2.160 11.2151 0.7701082 125.77846801 3.3488953 1.8299987
+7  43 53.517 22.5853 3.9799994 510.09577609 4.7523994 2.1799999
+8   3  6.234  0.7164 1.8300182   0.51322896 0.8464042 0.9200023
+9   2  2.858  0.8493 1.0501221   0.72131049 0.9215747 0.9599868
+10 26 34.124 16.0000 3.5300009 256.00000000 4.0000000 2.0000000
+11  3  2.484  5.6245 0.9098702  31.63500025 2.3716028 1.5400009
+12  2  6.619  0.1385 1.8899443   0.01918225 0.3721559 0.6100458</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> ex3.glm5&lt;-<span class="kw">glm</span>(y~logx1+fourthx2, <span class="dt">family =</span> poisson, <span class="dt">data =</span> ex3.df)
+ ex3.glm5</code></pre></div>
+<pre><code>
+Call:  glm(formula = y ~ logx1 + fourthx2, family = poisson, data = ex3.df)
+
+Coefficients:
+(Intercept)        logx1     fourthx2  
+    -1.2133       0.5224       1.3280  
+
+Degrees of Freedom: 11 Total (i.e. Null);  9 Residual
+Null Deviance:      142.4 
+Residual Deviance: 1.737    AIC: 51.84</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(ex3.glm5)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ logx1 + fourthx2, family = poisson, data = ex3.df)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.75819  -0.20401   0.05865   0.23673   0.69476  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -1.2133     0.4220  -2.875  0.00404 ** 
+logx1         0.5224     0.1161   4.500 6.79e-06 ***
+fourthx2      1.3280     0.2827   4.698 2.62e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 142.3521  on 11  degrees of freedom
+Residual deviance:   1.7371  on  9  degrees of freedom
+AIC: 51.837
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>The new deviance is still good, so then examine the diagnostic plots in Figure <a href="poisson-data.html#fig:p3diagD">5.11</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(ex3.df)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(ex3.glm5)
+<span class="kw">plot</span>(x1, ex3.glm5$res)
+<span class="kw">plot</span>(x2, ex3.glm5$res)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:p3diagD"></span>
+<img src="_main_files/figure-html/p3diagD-1.png" alt="Diagnostic Plots and Residual Plots: $\log(x1)$ and $\sqrt[4]{x2}$" width="576" />
+<p class="caption">
+Figure 5.11: Diagnostic Plots and Residual Plots: <span class="math inline">\(\log(x1)\)</span> and <span class="math inline">\(\sqrt[4]{x2}\)</span>
+</p>
+</div>
+<p>These now look okay. Thus the final model will be Poisson response with means given by: <span class="math display">\[\mu_{i}=\exp\left(-1.2133+0.5224\log(x1)+1.3280x2^{0.25} \right) \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(ex3.glm5)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = y ~ logx1 + fourthx2, family = poisson, data = ex3.df)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.75819  -0.20401   0.05865   0.23673   0.69476  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -1.2133     0.4220  -2.875  0.00404 ** 
+logx1         0.5224     0.1161   4.500 6.79e-06 ***
+fourthx2      1.3280     0.2827   4.698 2.62e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 142.3521  on 11  degrees of freedom
+Residual deviance:   1.7371  on  9  degrees of freedom
+AIC: 51.837
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<div id="offsets" class="section level2">
+<h2><span class="header-section-number">5.2</span> Offsets</h2>
+<p>An offset is a term to be added to a linear predictor, such as in a generalised linear model, with known coefficient 1 rather than an estimated coefficient. A common use of an offset is when dealing with poisson counts from populations of various sizes. It is necessary to acknowledge that the observed counts are partly related to the population sizes as well as any explanatory variables.</p>
+<div id="example-4-insurance-data" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Example 4: Insurance data</h3>
+<p>For example, the data given in the example dataset within R <em>‘’Insurance’’</em> consist of the numbers of policyholders of an insurance company who were exposed to risk, and the numbers of car insurance claims made by those policyholders in the third quarter of 1973.</p>
+<p>This data frame contains the following variables.</p>
+<ul>
+<li>District: district of policyholder, A/B/C/D, D is major cities.</li>
+<li>Group: group of car (1 to 4), $&lt;$1 litre, 1-1.5 litre, 1.5-2 litre, $&gt;$2 litre.</li>
+<li>Age: age of driver in 4 ordered groups, $&lt;$25, 25-29, 30-35, $&gt;$35.</li>
+<li>Holders: numbers of policyholders.</li>
+<li>Claims: numbers of claims.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(MASS)
+ <span class="kw">data</span>(<span class="st">&quot;Insurance&quot;</span>)
+ Insurance</code></pre></div>
+<pre><code>   District  Group   Age Holders Claims
+1         1    &lt;1l   &lt;25     197     38
+2         1    &lt;1l 25-29     264     35
+3         1    &lt;1l 30-35     246     20
+4         1    &lt;1l   &gt;35    1680    156
+5         1 1-1.5l   &lt;25     284     63
+6         1 1-1.5l 25-29     536     84
+7         1 1-1.5l 30-35     696     89
+8         1 1-1.5l   &gt;35    3582    400
+9         1 1.5-2l   &lt;25     133     19
+10        1 1.5-2l 25-29     286     52
+11        1 1.5-2l 30-35     355     74
+12        1 1.5-2l   &gt;35    1640    233
+13        1    &gt;2l   &lt;25      24      4
+14        1    &gt;2l 25-29      71     18
+15        1    &gt;2l 30-35      99     19
+16        1    &gt;2l   &gt;35     452     77
+17        2    &lt;1l   &lt;25      85     22
+18        2    &lt;1l 25-29     139     19
+19        2    &lt;1l 30-35     151     22
+20        2    &lt;1l   &gt;35     931     87
+21        2 1-1.5l   &lt;25     149     25
+22        2 1-1.5l 25-29     313     51
+23        2 1-1.5l 30-35     419     49
+24        2 1-1.5l   &gt;35    2443    290
+25        2 1.5-2l   &lt;25      66     14
+26        2 1.5-2l 25-29     175     46
+27        2 1.5-2l 30-35     221     39
+28        2 1.5-2l   &gt;35    1110    143
+29        2    &gt;2l   &lt;25       9      4
+30        2    &gt;2l 25-29      48     15
+31        2    &gt;2l 30-35      72     12
+32        2    &gt;2l   &gt;35     322     53
+33        3    &lt;1l   &lt;25      35      5
+34        3    &lt;1l 25-29      73     11
+35        3    &lt;1l 30-35      89     10
+36        3    &lt;1l   &gt;35     648     67
+37        3 1-1.5l   &lt;25      53     10
+38        3 1-1.5l 25-29     155     24
+39        3 1-1.5l 30-35     240     37
+40        3 1-1.5l   &gt;35    1635    187
+41        3 1.5-2l   &lt;25      24      8
+42        3 1.5-2l 25-29      78     19
+43        3 1.5-2l 30-35     121     24
+44        3 1.5-2l   &gt;35     692    101
+45        3    &gt;2l   &lt;25       7      3
+46        3    &gt;2l 25-29      29      2
+47        3    &gt;2l 30-35      43      8
+48        3    &gt;2l   &gt;35     245     37
+49        4    &lt;1l   &lt;25      20      2
+50        4    &lt;1l 25-29      33      5
+51        4    &lt;1l 30-35      40      4
+52        4    &lt;1l   &gt;35     316     36
+53        4 1-1.5l   &lt;25      31      7
+54        4 1-1.5l 25-29      81     10
+55        4 1-1.5l 30-35     122     22
+56        4 1-1.5l   &gt;35     724    102
+57        4 1.5-2l   &lt;25      18      5
+58        4 1.5-2l 25-29      39      7
+59        4 1.5-2l 30-35      68     16
+60        4 1.5-2l   &gt;35     344     63
+61        4    &gt;2l   &lt;25       3      0
+62        4    &gt;2l 25-29      16      6
+63        4    &gt;2l 30-35      25      8
+64        4    &gt;2l   &gt;35     114     33</code></pre>
+<p>The three explanatory variables (District/Group/Car) form a three way table with <span class="math inline">\(4^3=64\)</span> cells each containing a number of claims. If there was one policyholder in each cell was the same then we could (say) fit an additive model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod&lt;-<span class="kw">glm</span>(Claims~District+Group+Age,<span class="dt">family=</span>poisson,<span class="dt">data=</span>Insurance)
+ <span class="kw">summary</span>(mod)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = Claims ~ District + Group + Age, family = poisson, 
+    data = Insurance)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.5967  -0.9877  -0.1092   0.5180   4.3268  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  3.92306    0.03355 116.924  &lt; 2e-16 ***
+District2   -0.43822    0.04297 -10.198  &lt; 2e-16 ***
+District3   -0.91521    0.05032 -18.187  &lt; 2e-16 ***
+District4   -1.44367    0.06158 -23.445  &lt; 2e-16 ***
+Group.L     -0.51133    0.04932 -10.368  &lt; 2e-16 ***
+Group.Q     -1.02479    0.04198 -24.413  &lt; 2e-16 ***
+Group.C      0.21633    0.03304   6.547 5.87e-11 ***
+Age.L        1.50084    0.04916  30.527  &lt; 2e-16 ***
+Age.Q        0.47465    0.04882   9.722  &lt; 2e-16 ***
+Age.C        0.41495    0.04847   8.560  &lt; 2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 4236.68  on 63  degrees of freedom
+Residual deviance:  121.31  on 54  degrees of freedom
+AIC: 458.63
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>This would give the expected claim in a cell to be: <span class="math display">\[Expected\ claim = \exp(\beta_{0} + \beta^{District} + \beta^{Group} + \beta^{Age})\]</span> However there are a number of policyholders in each cell so we would require: <span class="math display">\[Expected\ claim = Holders \times \exp(\beta_{0} + \beta^{District} + \beta^{Group} + \beta^{Age})\]</span> Which can be re-written as: <span class="math display">\[Expected\ claim = \exp\left(\beta_{0} + \beta^{District} + \beta^{Group} + \beta^{Age}+\log(Holders)\right)\]</span> Note that the linear predictor now includes log(Holders) which is not a variable with a parameter to estimate! The appropriate main-effects fit as Poisson GLM with offset is:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">moda&lt;-<span class="kw">glm</span>(Claims~District+Group+Age+<span class="st"> </span><span class="kw">offset</span>(<span class="kw">log</span>(Holders)),
+        <span class="dt">family=</span>poisson,<span class="dt">data=</span>Insurance)
+ <span class="kw">summary</span>(moda)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = Claims ~ District + Group + Age + offset(log(Holders)), 
+    family = poisson, data = Insurance)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-2.46558  -0.50802  -0.03198   0.55555   1.94026  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.810508   0.032972 -54.910  &lt; 2e-16 ***
+District2    0.025868   0.043016   0.601 0.547597    
+District3    0.038524   0.050512   0.763 0.445657    
+District4    0.234205   0.061673   3.798 0.000146 ***
+Group.L      0.429708   0.049459   8.688  &lt; 2e-16 ***
+Group.Q      0.004632   0.041988   0.110 0.912150    
+Group.C     -0.029294   0.033069  -0.886 0.375696    
+Age.L       -0.394432   0.049404  -7.984 1.42e-15 ***
+Age.Q       -0.000355   0.048918  -0.007 0.994210    
+Age.C       -0.016737   0.048478  -0.345 0.729910    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 236.26  on 63  degrees of freedom
+Residual deviance:  51.42  on 54  degrees of freedom
+AIC: 388.74
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>Now consider an analysis of this data, beginning with a saturated model and using model simplification approaches to reduce the complexity of the final model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1&lt;-<span class="kw">glm</span>(Claims~District*Group*Age+<span class="kw">offset</span>(<span class="kw">log</span>(Holders)),
+        <span class="dt">family=</span>poisson,<span class="dt">data=</span>Insurance)
+<span class="kw">summary</span>(mod1)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = Claims ~ District * Group * Age + offset(log(Holders)), 
+    family = poisson, data = Insurance)
+
+Deviance Residuals: 
+ [1]  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+[24]  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+[47]  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+
+Coefficients:
+                          Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)             -1.870e+00  4.896e-02 -38.188  &lt; 2e-16 ***
+District2                1.350e-01  7.387e-02   1.827  0.06763 .  
+District3                5.649e-02  9.699e-02   0.582  0.56024    
+District4               -1.182e+00  2.640e+03   0.000  0.99964    
+Group.L                  3.545e-01  1.182e-01   2.998  0.00271 ** 
+Group.Q                 -4.487e-02  9.792e-02  -0.458  0.64681    
+Group.C                  3.656e-02  7.209e-02   0.507  0.61206    
+Age.L                   -2.816e-01  1.058e-01  -2.662  0.00778 ** 
+Age.Q                   -5.541e-02  9.792e-02  -0.566  0.57146    
+Age.C                    6.156e-02  8.935e-02   0.689  0.49088    
+District2:Group.L        5.975e-02  1.754e-01   0.341  0.73342    
+District3:Group.L       -6.837e-02  2.332e-01  -0.293  0.76934    
+District4:Group.L       -3.327e+00  7.085e+03   0.000  0.99963    
+District2:Group.Q        2.122e-01  1.477e-01   1.437  0.15085    
+District3:Group.Q       -1.755e-01  1.940e-01  -0.905  0.36554    
+District4:Group.Q       -2.709e+00  5.281e+03  -0.001  0.99959    
+District2:Group.C       -1.232e-01  1.135e-01  -1.086  0.27761    
+District3:Group.C       -2.240e-01  1.445e-01  -1.550  0.12107    
+District4:Group.C       -1.234e+00  2.362e+03  -0.001  0.99958    
+District2:Age.L         -2.699e-01  1.576e-01  -1.713  0.08677 .  
+District3:Age.L         -1.427e-01  1.928e-01  -0.740  0.45945    
+District4:Age.L          3.875e+00  7.085e+03   0.001  0.99956    
+District2:Age.Q          6.156e-02  1.477e-01   0.417  0.67691    
+District3:Age.Q          2.289e-01  1.940e-01   1.180  0.23801    
+District4:Age.Q         -2.727e+00  5.281e+03  -0.001  0.99959    
+District2:Age.C         -4.086e-03  1.372e-01  -0.030  0.97624    
+District3:Age.C         -2.941e-01  1.951e-01  -1.507  0.13169    
+District4:Age.C          1.122e+00  2.362e+03   0.000  0.99962    
+Group.L:Age.L            4.896e-01  2.567e-01   1.907  0.05655 .  
+Group.Q:Age.L           -8.415e-02  2.116e-01  -0.398  0.69087    
+Group.C:Age.L           -2.339e-01  1.537e-01  -1.522  0.12802    
+Group.L:Age.Q           -4.445e-01  2.365e-01  -1.880  0.06012 .  
+Group.Q:Age.Q            9.545e-02  1.958e-01   0.487  0.62600    
+Group.C:Age.Q            1.636e-01  1.442e-01   1.134  0.25662    
+Group.L:Age.C            1.192e-03  2.143e-01   0.006  0.99556    
+Group.Q:Age.C            2.331e-01  1.787e-01   1.304  0.19215    
+Group.C:Age.C            5.697e-02  1.340e-01   0.425  0.67072    
+District2:Group.L:Age.L -6.082e-01  3.748e-01  -1.623  0.10459    
+District3:Group.L:Age.L -6.794e-01  4.545e-01  -1.495  0.13496    
+District4:Group.L:Age.L  9.466e+00  1.901e+04   0.000  0.99960    
+District2:Group.Q:Age.L -2.889e-01  3.152e-01  -0.917  0.35929    
+District3:Group.Q:Age.L  1.724e-01  3.857e-01   0.447  0.65495    
+District4:Group.Q:Age.L  7.722e+00  1.417e+04   0.001  0.99957    
+District2:Group.C:Age.L  2.818e-01  2.413e-01   1.168  0.24281    
+District3:Group.C:Age.L  3.668e-01  3.015e-01   1.216  0.22383    
+District4:Group.C:Age.L  3.543e+00  6.337e+03   0.001  0.99955    
+District2:Group.L:Age.Q  4.292e-01  3.509e-01   1.223  0.22121    
+District3:Group.L:Age.Q  1.045e+00  4.663e-01   2.241  0.02501 *  
+District4:Group.L:Age.Q -7.033e+00  1.417e+04   0.000  0.99960    
+District2:Group.Q:Age.Q  1.593e-01  2.955e-01   0.539  0.58984    
+District3:Group.Q:Age.Q  2.985e-01  3.880e-01   0.769  0.44165    
+District4:Group.Q:Age.Q -5.933e+00  1.056e+04  -0.001  0.99955    
+District2:Group.C:Age.Q  4.501e-02  2.269e-01   0.198  0.84279    
+District3:Group.C:Age.Q -3.545e-03  2.890e-01  -0.012  0.99022    
+District4:Group.C:Age.Q -2.592e+00  4.723e+03  -0.001  0.99956    
+District2:Group.L:Age.C  3.166e-01  3.252e-01   0.974  0.33030    
+District3:Group.L:Age.C -6.739e-01  4.779e-01  -1.410  0.15847    
+District4:Group.L:Age.C  3.207e+00  6.337e+03   0.001  0.99960    
+District2:Group.Q:Age.C -4.190e-01  2.744e-01  -1.527  0.12668    
+District3:Group.Q:Age.C -5.423e-01  3.902e-01  -1.390  0.16457    
+District4:Group.Q:Age.C  2.769e+00  4.723e+03   0.001  0.99953    
+District2:Group.C:Age.C  4.101e-02  2.116e-01   0.194  0.84635    
+District3:Group.C:Age.C -3.275e-01  2.760e-01  -1.187  0.23527    
+District4:Group.C:Age.C  9.491e-01  2.112e+03   0.000  0.99964    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 2.3626e+02  on 63  degrees of freedom
+Residual deviance: 4.1222e-10  on  0  degrees of freedom
+AIC: 445.32
+
+Number of Fisher Scoring iterations: 20</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2&lt;-<span class="kw">step</span>(mod1,<span class="dt">direction=</span><span class="st">&quot;both&quot;</span>)</code></pre></div>
+<pre><code>Start:  AIC=445.32
+Claims ~ District * Group * Age + offset(log(Holders))
+
+                     Df Deviance    AIC
+- District:Group:Age 27    27.29 418.61
+&lt;none&gt;                      0.00 445.32
+
+Step:  AIC=418.61
+Claims ~ District + Group + Age + District:Group + District:Age + 
+    Group:Age + offset(log(Holders))
+
+                     Df Deviance    AIC
+- District:Age        9   33.527 406.85
+- District:Group      9   34.457 407.78
+- Group:Age           9   37.685 411.01
+&lt;none&gt;                    27.290 418.61
++ District:Group:Age 27    0.000 445.32
+
+Step:  AIC=406.85
+Claims ~ District + Group + Age + District:Group + Group:Age + 
+    offset(log(Holders))
+
+                 Df Deviance    AIC
+- District:Group  9   40.907 396.23
+- Group:Age       9   44.132 399.45
+&lt;none&gt;                33.527 406.85
++ District:Age    9   27.290 418.61
+
+Step:  AIC=396.23
+Claims ~ District + Group + Age + Group:Age + offset(log(Holders))
+
+                 Df Deviance    AIC
+- Group:Age       9   51.420 388.74
+&lt;none&gt;                40.907 396.23
+- District        3   54.850 404.17
++ District:Group  9   33.527 406.85
++ District:Age    9   34.457 407.78
+
+Step:  AIC=388.74
+Claims ~ District + Group + Age + offset(log(Holders))
+
+                 Df Deviance    AIC
+&lt;none&gt;                51.420 388.74
++ Group:Age       9   40.907 396.23
+- District        3   65.291 396.61
++ District:Group  9   44.132 399.45
++ District:Age    9   44.859 400.18
+- Age             3  136.290 467.61
+- Group           3  140.087 471.41</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod2)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = Claims ~ District + Group + Age + offset(log(Holders)), 
+    family = poisson, data = Insurance)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-2.46558  -0.50802  -0.03198   0.55555   1.94026  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.810508   0.032972 -54.910  &lt; 2e-16 ***
+District2    0.025868   0.043016   0.601 0.547597    
+District3    0.038524   0.050512   0.763 0.445657    
+District4    0.234205   0.061673   3.798 0.000146 ***
+Group.L      0.429708   0.049459   8.688  &lt; 2e-16 ***
+Group.Q      0.004632   0.041988   0.110 0.912150    
+Group.C     -0.029294   0.033069  -0.886 0.375696    
+Age.L       -0.394432   0.049404  -7.984 1.42e-15 ***
+Age.Q       -0.000355   0.048918  -0.007 0.994210    
+Age.C       -0.016737   0.048478  -0.345 0.729910    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 236.26  on 63  degrees of freedom
+Residual deviance:  51.42  on 54  degrees of freedom
+AIC: 388.74
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>Making a prediction</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2.pred&lt;-<span class="kw">predict</span>(mod2,<span class="dt">se.fit=</span>T,<span class="dt">type=</span><span class="st">&quot;response&quot;</span>)
+mod2.pred</code></pre></div>
+<pre><code>$fit
+         1          2          3          4          5          6 
+ 31.863585  35.275867  28.180802 158.878292  53.977716  84.160115 
+         7          8          9         10         11         12 
+ 93.690431 398.060076  31.862179  56.602450  60.234044 229.717751 
+        13         14         15         16         17         18 
+  6.819092  16.665525  19.922338  75.089737  14.108529  19.060004 
+        19         20         21         22         23         24 
+ 17.751277  90.352333  29.061421  50.433636  57.880788 278.599876 
+        25         26         27         28         29         30 
+ 16.225653  35.541983  38.480469 159.554148   2.624171  11.562089 
+        31         32         33         34         35         36 
+ 14.868666  54.894955   5.883384  10.137418  10.595927  63.688499 
+        37         38         39         40         41         42 
+ 10.468941  25.293210  33.575924 188.830232   5.975384  16.043331 
+        43         44         45         46         47         48 
+ 21.336824 100.736656   2.067017   7.074396   8.992994  42.299863 
+        49         50         51         52         53         54 
+  4.088580   5.573164   5.791517  37.770823   7.446839  16.074617 
+        55         56         57         58         59         60 
+ 20.756777 101.689401   5.450175   9.755463  14.582657  60.900833 
+        61         62         63         64 
+  1.077335   4.746732   6.358566  23.936524 
+
+$se.fit
+         1          2          3          4          5          6 
+ 2.4467288  2.3205295  1.8336491  7.8310962  3.8413334  4.7928758 
+         7          8          9         10         11         12 
+ 5.1246179 14.3024535  2.3711431  3.4120459  3.5100699  9.7020485 
+        13         14         15         16         17         18 
+ 0.6102392  1.2790771  1.4898542  4.7613246  1.1421776  1.3282707 
+        19         20         21         22         23         24 
+ 1.2209058  4.8532204  2.1783800  3.0548953  3.3675926 11.2937839 
+        25         26         27         28         29         30 
+ 1.2663282  2.2641762  2.3682811  7.3719026  0.2422804  0.9161009 
+        31         32         33         34         35         36 
+ 1.1466586  3.6141140  0.5077136  0.7620401  0.7818445  3.7658612 
+        37         38         39         40         41         42 
+ 0.8464585  1.6946155  2.1564105  9.0165498  0.5017790  1.1253227 
+        43         44         45         46         47         48 
+ 1.4423277  5.3432260  0.1998079  0.5918393  0.7299460  2.9526387 
+        49         50         51         52         53         54 
+ 0.3792472  0.4624035  0.4724435  2.6112194  0.6542183  1.2184624 
+        55         56         57         58         59         60 
+ 1.5194113  6.0900921  0.4925305  0.7626322  1.1045784  3.8778838 
+        61         62         63         64 
+ 0.1103283  0.4303229  0.5610220  1.8759244 
+
+$residual.scale
+[1] 1</code></pre>
+<p>Printing confidence intervals:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">round</span>(mod2.pred$fit[<span class="dv">1</span>],<span class="dv">2</span>),<span class="st">&quot; (&quot;</span>,
+  <span class="kw">round</span>(mod2.pred$fit[<span class="dv">1</span>]-<span class="kw">qt</span>(.<span class="dv">975</span>,<span class="dv">54</span>)*mod2.pred$se.fit[<span class="dv">1</span>],<span class="dv">2</span>),<span class="st">&quot;,&quot;</span>,
+  <span class="kw">round</span>(mod2.pred$fit[<span class="dv">1</span>]+<span class="kw">qt</span>(.<span class="dv">975</span>,<span class="dv">54</span>)*mod2.pred$se.fit[<span class="dv">1</span>],<span class="dv">2</span>),
+  <span class="st">&quot;)&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">quote=</span>F)</code></pre></div>
+<pre><code>[1] 31.86 (26.96,36.77)</code></pre>
+<p>Note that these can be embedded within your Rmarkdown code as 31.86 (26.96, 36.77). While the code may seem to be a lot more than just typing in the results directly, the advantage it has is that you have made a mistake in data entry at some point and need to rerun your code, the new results will automatically update here.</p>
+</div>
+</div>
+<div id="practical-exercises" class="section level2">
+<h2><span class="header-section-number">5.3</span> Practical exercises</h2>
+<div id="exercise-1-missing-persons-data" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Exercise 1: Missing persons data</h3>
+<p>The following data set appeared in The Independent, March 8, 1994, under the headline “Thousands of people who disappear without trace”. Here, using figures from the Metropolitan police, the numbers in the table are of the form r/n where n = the number reported missing during the year ending March 1993 and r = the number still missing at the end of that year. Questions of interest are whether a simple model fits these data, whether the age and/or sex effect are significant, and how to interpret the statistical conclusions to the layman.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Age in years</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>13 and under</td>
+<td>14-18</td>
+</tr>
+<tr class="even">
+<td>Males</td>
+<td>33/3271</td>
+<td>63/7257</td>
+</tr>
+<tr class="odd">
+<td>Females</td>
+<td>38/2486</td>
+<td>108/8877</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Read in the data n and r.</li>
+<li>Create factors sex and age.</li>
+<li>Create the data frame missing.df and remove unwanted files.</li>
+<li>Fit a Poisson regression using the appropriate offset; that is the linear predictor determined by <span class="math inline">\(r\sim sex+age+offset(\log(n))\)</span>.</li>
+<li>Describe and interpret these results.</li>
+<li>Simplify the Poisson if possible. Comment on the final model.</li>
+</ul>
+</div>
+<div id="exercise-2-aids-data" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Exercise 2: AIDS data</h3>
+<p>The total number of reported new cases per month of AIDS in the UK up to November 1985 are listed below (data from A. Sykes, 1986):</p>
+<p>0,0,3,0,1,1,1,2,2,4,2,8,0,3,4,5,2,2 ,2,5,4,3,15,12,7,14,6,10,14,8,19,10,7,20,10,19</p>
+<p>(data for 36 consecutive months - reading across).</p>
+<ul>
+<li>Read in the data y.</li>
+<li>Create a covariate for month number using i=1:36.</li>
+<li>Plot number of new cases against month; note that y (more or less) increases as i increases.</li>
+<li>Create aids.df data frame.</li>
+<li>Fit a model that has the following simple log-linear relationship; <span class="math inline">\(\log(\mu_{i})=\alpha+\beta_{i}\)</span>.</li>
+<li>Can <span class="math inline">\(\beta\)</span> be dropped?</li>
+</ul>
+</div>
+<div id="exercise-3-composite-material-cracks-data" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> Exercise 3: Composite material cracks data</h3>
+<p>The following data records the experimental results of an investigation into the strength properties of two types of composite materials. Specimens were subjected to various forces in Newtons, x, and the ensuing number of cracks appearing was recorded, y.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Material 1</td>
+<td>y</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>7</td>
+<td>9</td>
+<td>10</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>x</td>
+<td>0.1</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.8</td>
+<td>1.0</td>
+<td>1.3</td>
+<td>1.4</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Material 2</td>
+<td>y</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>12</td>
+<td>10</td>
+<td>13</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>x</td>
+<td>0.0</td>
+<td>0.1</td>
+<td>0.2</td>
+<td>0.3</td>
+<td>0.4</td>
+<td>0.5</td>
+<td>0.6</td>
+</tr>
+</tbody>
+</table>
+<p>Investigate two possible models:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\eta_{i}=\beta_{0}+\beta_{j\left(i\right)}^{A}+\beta^{X}x_{i}+\beta_{j\left(i\right)}^{AX}x_{i}\)</span></p></li>
+<li><p><span class="math inline">\(\eta_{i}=\beta_{0}+\beta_{j\left(i\right)}^{A}+\beta^{X}x_{i}\)</span></p></li>
+</ol>
+<p>What do the two models represent? Perform any model simplification that is appropriate.</p>
+</div>
+</div>
+<div id="over-dispersion" class="section level2">
+<h2><span class="header-section-number">5.4</span> Over-dispersion</h2>
+<p>Over-dispersion can be a problem when working with the 1-parameter error distributions (e.g. Poisson or binomial errors) and occurs when the variance of the response exceeds the nominal variance. Over-dispersion tends to occur when:</p>
+<ul>
+<li>you have not measured one or more factors that turn out to be important;</li>
+<li>the underlying distribution being non-Poisson.</li>
+</ul>
+<p>The net result of these will be that the residual deviance is inflated.</p>
+<p>For the 1-parameter error distributions the scale parameter <span class="math inline">\(\phi\)</span> is assumed to be one. The usual estimator of <span class="math inline">\(\phi\)</span> is <span class="math inline">\(\hat{\phi}=D/(n-p)\)</span> and thus the residual deviance divided by the residual degrees of freedom ought to be one. If this ratio is substantially larger than the assumed scale parameter of one (i.e. the residual deviance is much greater than the degrees of freedom), then this would suggest that the data are over-dispersed.</p>
+<p>It is dealt with by adjusting the scale parameter to be a value other than one. This can be dealt with in two ways:</p>
+<ul>
+<li>using the quasipoisson family which differs from the poisson family because the dispersion parameter is not fixed at one, so it can model over-dispersion. The usual link functions are available.</li>
+<li>using the quasi family which allows us to estimate model parameters without fully specifying the error distribution of the response. However, we must specify the link and variance functions (so this requires a bit more consideration).</li>
+</ul>
+<p>Note:</p>
+<ul>
+<li>Significance is then assessed by F-tests, using the estimated scale parameter as the denominator.</li>
+<li>The parameter estimates are not affected by this procedure, but the standard errors are inflated.</li>
+<li>Significance tests are therefore more stringent and can lead to fewer significant effects.</li>
+<li>family=quasi(link=‘’log’‘,var=’‘mu’’) is the same as quasipoisson</li>
+</ul>
+<p>Under-dispersion is when the variance of the response is less than the nominal variance. It is dealt with in a similar fashion.</p>
+<div id="example-5-poisson-slugs" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Example 5: Poisson (slugs)</h3>
+<p>Count data were obtained on the number of slugs under 40 tiles placed over two types of grassland; nursery and rookery. Does the mean slug density differ between the two?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> slugs&lt;-<span class="kw">read.table</span>(<span class="st">&quot;slugsurvey.txt&quot;</span>,<span class="dt">header=</span>T)
+ <span class="kw">names</span>(slugs)</code></pre></div>
+<pre><code>[1] &quot;count&quot; &quot;field&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">attach</span>(slugs)
+<span class="kw">plot</span>(count~field,<span class="dt">xlab=</span><span class="st">&quot;Field&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;count&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs1"></span>
+<img src="_main_files/figure-html/slugs1-1.png" alt="Slug count by Location" width="576" />
+<p class="caption">
+Figure 5.12: Slug count by Location
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(count[field==<span class="st">&quot;Nursery&quot;</span>])</code></pre></div>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.275   1.250  10.000 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">summary</span>(count[field==<span class="st">&quot;Rookery&quot;</span>])</code></pre></div>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   2.000   2.275   3.000   9.000 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">detach</span>(slugs)</code></pre></div>
+<p>From the above looks like the medians are different, but the range of counts in both fields is large and so significance may be in doubt. The data does not appear to be normal as for the nursery it is heavily positive skewed. Also, it looks like the variance between the fields may not be constant. So standard ANOVA does not look appropriate.</p>
+<p>We start by fitting Poisson model with log link:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod1&lt;-<span class="kw">glm</span>(count~field,poisson,<span class="dt">data=</span>slugs)
+ <span class="kw">summary</span>(mod1)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = count ~ field, family = poisson, data = slugs)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1331  -1.5969  -0.9519   0.4580   4.8727  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)    0.2429     0.1400   1.735 0.082744 .  
+fieldRookery   0.5790     0.1749   3.310 0.000932 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 224.86  on 79  degrees of freedom
+Residual deviance: 213.44  on 78  degrees of freedom
+AIC: 346.26
+
+Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod2&lt;-<span class="kw">update</span>(mod1,.~.-field)
+ <span class="kw">anova</span>(mod1,mod2,<span class="dt">test=</span><span class="st">&quot;Chi&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model 1: count ~ field
+Model 2: count ~ 1
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)    
+1        78     213.44                         
+2        79     224.86 -1  -11.422 0.000726 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(mod1)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs2"></span>
+<img src="_main_files/figure-html/slugs2-1.png" alt="Diagnostic Plots for mod1" width="576" />
+<p class="caption">
+Figure 5.13: Diagnostic Plots for mod1
+</p>
+</div>
+<p>This suggests that field is significant. BUT it appears that over-dispersion is present; from the output we would estimate the scale parameter to be 213.44/78=2.74 which is much more than one which it should be. Q-Q plot is very concave.</p>
+<p>We shall now try the quasipoisson family still with log link. This will allow for the presence of a non unity scale parameter.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod3&lt;-<span class="kw">glm</span>(count~field,quasipoisson,<span class="dt">data=</span>slugs)
+ <span class="kw">summary</span>(mod3)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = count ~ field, family = quasipoisson, data = slugs)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1331  -1.5969  -0.9519   0.4580   4.8727  
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)    0.2429     0.2494   0.974   0.3331  
+fieldRookery   0.5790     0.3116   1.858   0.0669 .
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for quasipoisson family taken to be 3.17311)
+
+    Null deviance: 224.86  on 79  degrees of freedom
+Residual deviance: 213.44  on 78  degrees of freedom
+AIC: NA
+
+Number of Fisher Scoring iterations: 6</code></pre>
+<p>Deletion tests now need to be done using the F distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod4&lt;-<span class="kw">update</span>(mod3,.~.-field)
+ <span class="kw">anova</span>(mod3,mod4,<span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model 1: count ~ field
+Model 2: count ~ 1
+  Resid. Df Resid. Dev Df Deviance      F Pr(&gt;F)  
+1        78     213.44                            
+2        79     224.86 -1  -11.422 3.5995 0.0615 .
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(mod3)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs3"></span>
+<img src="_main_files/figure-html/slugs3-1.png" alt="Diagnostic Plots for mod3" width="576" />
+<p class="caption">
+Figure 5.14: Diagnostic Plots for mod3
+</p>
+</div>
+<p>We can now see that the difference in mean slug density is not significant. The Q-Q plot isn’t improved much. We could try the quasi family with log link which allows us to break away from the Poisson relationship between the mean and the variance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod5&lt;-<span class="kw">glm</span>(count~field,<span class="kw">quasi</span>(<span class="dt">link=</span><span class="st">&quot;log&quot;</span>,<span class="dt">var=</span><span class="st">&quot;mu^2&quot;</span>),<span class="dt">data=</span>slugs)
+ <span class="kw">summary</span>(mod5)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = count ~ field, family = quasi(link = &quot;log&quot;, var = &quot;mu^2&quot;), 
+    data = slugs)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.7232  -0.1261   0.0000   0.2900   3.0931  
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)    0.2429     0.2300   1.056   0.2941  
+fieldRookery   0.5790     0.3252   1.780   0.0789 .
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for quasi family taken to be 2.115738)
+
+    Null deviance: 40.144  on 79  degrees of freedom
+Residual deviance: 45.606  on 78  degrees of freedom
+AIC: NA
+
+Number of Fisher Scoring iterations: 11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod6&lt;-<span class="kw">update</span>(mod5,.~.-field)
+ <span class="kw">anova</span>(mod5,mod6,<span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model 1: count ~ field
+Model 2: count ~ 1
+  Resid. Df Resid. Dev Df Deviance F Pr(&gt;F)
+1        78     45.606                     
+2        79     40.144 -1   5.4615         </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(mod5)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs4"></span>
+<img src="_main_files/figure-html/slugs4-1.png" alt="Diagnostic Plots for mod5" width="576" />
+<p class="caption">
+Figure 5.15: Diagnostic Plots for mod5
+</p>
+</div>
+<p>Again a non-significant result but Q-Q plot has got worse in Figure <a href="poisson-data.html#fig:slugs4">5.15</a>.</p>
+<p>Alternative approaches for this problem could be to use ANOVA after transformation to get normality/constant variance; try either log or sqrt transformations. Note we have to add 1 to count for log transformation as there are zero counts in this dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(slugs)
+<span class="kw">plot</span>(<span class="kw">log</span>(count<span class="dv">+1</span>)~field)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs5"></span>
+<img src="_main_files/figure-html/slugs5-1.png" alt="Log Transformation" width="576" />
+<p class="caption">
+Figure 5.16: Log Transformation
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod7&lt;-<span class="kw">glm</span>(<span class="kw">log</span>(count<span class="dv">+1</span>)~field,<span class="dt">data=</span>slugs)
+ <span class="kw">summary</span>(mod7)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = log(count + 1) ~ field, data = slugs)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.9698  -0.4967  -0.2766   0.4165   1.9012  
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    0.4967     0.1117   4.446 2.86e-05 ***
+fieldRookery   0.4730     0.1580   2.994  0.00369 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for gaussian family taken to be 0.4993769)
+
+    Null deviance: 43.426  on 79  degrees of freedom
+Residual deviance: 38.951  on 78  degrees of freedom
+AIC: 175.45
+
+Number of Fisher Scoring iterations: 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod8&lt;-<span class="kw">update</span>(mod7,.~.-field)
+ <span class="kw">anova</span>(mod7,mod8,<span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model 1: log(count + 1) ~ field
+Model 2: log(count + 1) ~ 1
+  Resid. Df Resid. Dev Df Deviance      F   Pr(&gt;F)   
+1        78     38.951                               
+2        79     43.426 -1   -4.475 8.9612 0.003693 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(mod7)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs6"></span>
+<img src="_main_files/figure-html/slugs6-1.png" alt="Diagnostic Plots for mod7" width="576" />
+<p class="caption">
+Figure 5.17: Diagnostic Plots for mod7
+</p>
+</div>
+<p>Here we get a significant effect for field. But the associated Q-Q plots still not great in Figure <a href="poisson-data.html#fig:slugs6">5.17</a>.</p>
+<p>Try a square root transformation (as in Figure <a href="poisson-data.html#fig:slugs7">5.18</a> and associated output).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">plot</span>(<span class="kw">sqrt</span>(count)~field)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs7"></span>
+<img src="_main_files/figure-html/slugs7-1.png" alt="Square Root Transformation" width="576" />
+<p class="caption">
+Figure 5.18: Square Root Transformation
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod9&lt;-<span class="kw">glm</span>(<span class="kw">sqrt</span>(count)~field,<span class="dt">data=</span>slugs)
+ <span class="kw">summary</span>(mod9)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = sqrt(count) ~ field, data = slugs)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.2549  -0.6446  -0.2549   0.4772   2.5176  
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    0.6447     0.1414   4.559 1.88e-05 ***
+fieldRookery   0.6103     0.2000   3.052  0.00311 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for gaussian family taken to be 0.799815)
+
+    Null deviance: 69.834  on 79  degrees of freedom
+Residual deviance: 62.386  on 78  degrees of freedom
+AIC: 213.13
+
+Number of Fisher Scoring iterations: 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mod10&lt;-<span class="kw">update</span>(mod9,.~.-field)
+ <span class="kw">anova</span>(mod9,mod10,<span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</code></pre></div>
+<pre><code>Analysis of Deviance Table
+
+Model 1: sqrt(count) ~ field
+Model 2: sqrt(count) ~ 1
+  Resid. Df Resid. Dev Df Deviance      F   Pr(&gt;F)   
+1        78     62.386                               
+2        79     69.834 -1  -7.4481 9.3123 0.003111 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+ <span class="kw">plot</span>(mod9)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:slugs8"></span>
+<img src="_main_files/figure-html/slugs8-1.png" alt="Diagnostic Plots for mod9" width="576" />
+<p class="caption">
+Figure 5.19: Diagnostic Plots for mod9
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">detach</span>(slugs)</code></pre></div>
+<p>Again a significant result for field, but Q-Q plots no better. We have contradictory results from the above which is common with data with low means and high variances. The residual plots in Figure <a href="poisson-data.html#fig:slugs8">5.19</a> are not helping us in identifying which is the best model. There is no obvious right answer, but the results correcting for over-dispersion are warning us that conclusions from the ANOVA approach should be treated with caution especially as the transformed data does not appear normal.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-glm-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
